@@ -146,6 +146,40 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 .profile-bio{min-height:24px;color:#ddd!important;font-size:12px;white-space:pre-wrap}
 @media(max-width:600px){.message-paper{border-radius:34% 34% 14px 14px / 7% 7% 14px 14px;padding:17px}.message-paper:before{width:76px;height:76px;right:5%;top:15px}.message-heading{padding-right:90px;font-size:17px}}
 
+
+/* Colecao clicavel de HQs e anexos compartilhados */
+.comic-panel{cursor:pointer;transition:transform .18s ease,filter .18s ease;user-select:none}
+.comic-panel:hover,.comic-panel:focus-visible{transform:translateY(-4px) scale(1.015);filter:brightness(1.08);outline:3px solid #FFE81F;outline-offset:2px}
+.comic-panel.selected{outline:4px solid #FFE81F;outline-offset:2px;box-shadow:0 0 18px rgba(255,232,31,.35),3px 3px 0 #17120a}
+.comic-panel .tile-count{font:10px 'Space Mono';background:#111;color:#FFE81F;padding:4px 8px;margin-top:8px}
+.comic-file-card{background:#fff6d9;color:#17120a;border:3px solid #17120a;border-left:8px solid #a92e24;padding:14px;margin:12px 0;box-shadow:3px 3px 0 #17120a}
+.comic-file-card a{color:#172e8a;font-weight:bold;text-decoration:underline}
+.comic-file-card img{display:block;max-width:100%;max-height:210px;object-fit:contain;margin:10px auto;border:2px solid #17120a}
+.comic-upload-hint{font-size:10px;color:#332819}
+.strip-result{overflow:hidden}
+.strip-panels{overflow:hidden}
+.strip-result.is-animating .strip-panel{animation:stripReveal .9s both ease-out}
+.strip-result.is-animating .strip-panel:nth-child(2){animation-delay:.85s}
+.strip-result.is-animating .strip-panel:nth-child(1){animation-delay:.08s}
+.strip-result.is-animating .strip-panel p{animation:dialogPop .45s both ease-out;animation-delay:.45s}
+.strip-result.is-animating .strip-panel:nth-child(2) p{animation-delay:1.2s}
+@keyframes stripReveal{0%{opacity:0;transform:translateX(35px) rotate(2deg);filter:brightness(2)}70%{opacity:1;transform:translateX(-4px) rotate(-1deg)}100%{opacity:1;transform:none;filter:none}}
+@keyframes dialogPop{0%{opacity:0;transform:scale(.75) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.message-comments{margin:14px 0 0 18px;padding:10px 12px;border-left:2px solid #FFE81F;background:rgba(0,0,0,.2)}
+.message-comment{padding:8px 0;border-bottom:1px solid rgba(160,175,190,.22);color:#fff;font-size:12px}
+.message-comment:last-child{border-bottom:0}
+.message-comment strong{color:#FFE81F}
+.mention{color:#FFE81F;font-weight:bold;text-decoration:underline;text-underline-offset:2px}
+.reply-form{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}
+.reply-form textarea{min-height:54px;background:#090d12;color:#fff;border:1px solid #66717b;padding:9px}
+.reply-form .btn{align-self:end;white-space:nowrap}
+.mention-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:7px}
+.mention-tools button{font-size:9px;padding:6px 8px}
+.game-arena{height:auto;min-height:0;padding:0;background:#05080d;border:1px solid rgba(255,232,31,.55);touch-action:manipulation}
+#shipGameCanvas{display:block;width:100%;height:300px;background:linear-gradient(#050914,#101b2b 72%,#20252b);cursor:pointer;touch-action:manipulation}
+.game-help{font-size:10px;color:#aeb8c4;margin-top:8px}
+@media(max-width:600px){.reply-form{grid-template-columns:1fr}.reply-form .btn{justify-self:start}#shipGameCanvas{height:230px}}
+
 </style>
 </head>
 <body>
@@ -227,11 +261,20 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 <section id="comics" class="section">
   <div class="eyebrow">ARQUIVO DE HQs / 005</div><h2>Nossa coleção de quadrinhos.</h2>
   <div class="comic-intro">POW! <span>QUADRINHOS NA ÁREA!</span> PÁ!</div>
-  <div class="comic-grid"><div class="comic-panel"><strong>HERÓIS</strong><small>ORIGENS E LENDAS</small></div><div class="comic-panel"><strong>POW!</strong><small>A ARTE DOS QUADROS</small></div><div class="comic-panel"><strong>VILÕES</strong><small>TODA HISTÓRIA PRECISA DELES</small></div><div class="comic-panel"><strong>EDIÇÃO Nº 001</strong><small>NOSSA COLEÇÃO COMPARTILHADA</small></div></div>
-  <div class="card comic-form-card"><h3>✚ ADICIONAR HQ</h3><form onsubmit="addItem(event,'comics')">
+  <div class="comic-grid" id="comicCategoryTiles">
+    <button type="button" class="comic-panel" data-collection="herois" onclick="selectComicCollection('herois',this)"><strong>HERÓIS</strong><small>ORIGENS E LENDAS</small><span class="tile-count" id="count-herois">0 ARQUIVOS</span></button>
+    <button type="button" class="comic-panel" data-collection="pow" onclick="selectComicCollection('pow',this)"><strong>POW!</strong><small>A ARTE DOS QUADROS</small><span class="tile-count" id="count-pow">0 ARQUIVOS</span></button>
+    <button type="button" class="comic-panel" data-collection="viloes" onclick="selectComicCollection('viloes',this)"><strong>VILÕES</strong><small>TODA HISTÓRIA PRECISA DELES</small><span class="tile-count" id="count-viloes">0 ARQUIVOS</span></button>
+    <button type="button" class="comic-panel" data-collection="edicao" onclick="selectComicCollection('edicao',this)"><strong>EDIÇÃO Nº 001</strong><small>NOSSA COLEÇÃO COMPARTILHADA</small><span class="tile-count" id="count-edicao">0 ARQUIVOS</span></button>
+  </div>
+  <div class="card" id="comicCollectionView" style="margin-top:18px"><h3 id="comicCollectionTitle">SELECIONE UM QUADRO</h3><p id="comicCollectionHint">Clique em um dos quatro quadros para abrir os quadrinhos daquela coleção.</p><div id="comicCollectionFiles"></div></div>
+  <div class="card comic-form-card"><h3>✚ ADICIONAR HQ / ARQUIVO</h3><form onsubmit="addComic(event)">
     <label>NOME DA HQ</label><input id="comicsTitle" required placeholder="Ex: Batman: Year One">
     <label>AUTOR / ILUSTRADOR</label><input id="comicsArtist" placeholder="Autor ou artista">
     <label>UNIVERSO</label><select id="comicsStatus"><option>DC Comics</option><option>Marvel</option><option>Star Wars</option><option>Independente</option><option>Outro</option></select>
+    <label>EM QUAL QUADRO?</label><select id="comicsCollection"><option value="herois">HERÓIS</option><option value="pow">POW!</option><option value="viloes">VILÕES</option><option value="edicao">EDIÇÃO Nº 001</option></select>
+    <label>ARQUIVO DA HQ (PDF OU IMAGEM)</label><input id="comicFile" type="file" accept="application/pdf,image/*">
+    <p class="comic-upload-hint">O arquivo ficará disponível para os dois usuários. Limite: 1,5 MB por arquivo.</p>
     <label>INDICAÇÃO / COMENTÁRIO</label><textarea id="comicsNote" placeholder="Por que essa HQ merece ser lida?"></textarea>
     <button class="btn">GUARDAR HQ ▣</button>
   </form></div><div id="comicsList"></div>
@@ -281,6 +324,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
     <form onsubmit="postMessage(event)">
       <label>ESCREVA UM COMENTÁRIO OU RECADO</label>
       <textarea id="messageText" required maxlength="500" placeholder="Digite sua mensagem para o outro tripulante..."></textarea>
+      <div class="mention-tools"><button type="button" class="btn btn-outline" onclick="insertMention('messageText')">@ MENCIONAR OUTRA PESSOA</button><small>Use @Darth Vader ou @Batman para chamar a atenção.</small></div>
       <button class="btn">PUBLICAR TRANSMISSÃO ✉</button>
     </form>
     <div id="messageList"></div>
@@ -289,11 +333,12 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 
 <section id="game" class="section">
 <div class="eyebrow">CENTRAL DE MISSÕES / 007</div><h2>TESTE DE REFLEXOS</h2>
-<p>Um pequeno desafio para dois jogadores: clique nos alvos antes que o tempo acabe. Quem conseguir mais pontos vence a rodada.</p>
+<p>Um jogo de corrida infinita inspirado no clássico do dinossauro: pilote uma nave, salte sobre asteroides e tente ir o mais longe possível.</p>
 <div class="game-board">
-<div class="game-stats"><span>TEMPO: <b id="gameTime">20</b>s</span><span>JOGADOR: <b id="gamePlayer">PLAYER ONE</b></span><span>SCORE: <b id="gameScore">0</b></span></div>
-<div class="game-arena" id="gameArena"><p class="game-message" id="gameMessage">Aperte COMEÇAR para iniciar sua rodada.</p></div>
-<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px"><button class="btn" id="startGame" onclick="startGame()">COMEÇAR MISSÃO</button><button class="btn btn-outline" onclick="switchGamePlayer()">TROCAR JOGADOR</button></div>
+<div class="game-stats"><span>PILOTO: <b id="gamePlayer">Darth Vader</b></span><span>DISTÂNCIA: <b id="gameScore">0</b></span><span>RECORDE DA RODADA: <b id="gameBest">0</b></span></div>
+<div class="game-arena" id="gameArena"><canvas id="shipGameCanvas" width="900" height="300" aria-label="Jogo de nave: pressione espaço ou toque para saltar"></canvas></div>
+<p class="game-help" id="gameMessage">Pressione ESPAÇO, ↑ ou toque na tela para saltar. Evite os asteroides.</p>
+<div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px"><button class="btn" id="startGame" onclick="startGame()">INICIAR MISSÃO</button><button class="btn btn-outline" onclick="switchGamePlayer()">TROCAR PILOTO</button></div>
 <div class="game-stats"><span>VADER: <b id="score1">0</b></span><span>BATMAN: <b id="score2">0</b></span></div>
 </div><div class="comic-box">QUE A FORÇA ESTEJA COM O MAIS RÁPIDO! <span>★</span></div>
 </section>
@@ -323,6 +368,8 @@ if(!data) data={users:{1:'Darth Vader',2:'Batman'},profiles:{1:{photo:'',bio:''}
 data.users=data.users||{1:'Darth Vader',2:'Batman'};
 data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
 ['music','books','comics','messages','comicCreations'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
+data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
+data.messages.forEach(m=>{if(!Array.isArray(m.comments))m.comments=[];});
 let currentAuthUser=null, realtimeChannel=null, cloudReady=false, saveQueue=Promise.resolve();
 function setIdentity(userId,email){
   const player=USER_EMAILS[String(email||'').toLowerCase()] || USER_IDS[userId];
@@ -353,6 +400,8 @@ async function loadCloudState(){
     data.users=data.users||{1:'Darth Vader',2:'Batman'};
     data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
     ['music','books','comics','messages','comicCreations'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
+    data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
+    data.messages.forEach(m=>{if(!Array.isArray(m.comments))m.comments=[];});
   } else {
     await supabaseClient.from('universe_state').upsert({id:'main',state:data,updated_at:new Date().toISOString()},{onConflict:'id'}).then(({error})=>{if(error)throw error;});
   }
@@ -368,6 +417,8 @@ async function loadCloudState(){
         data=incoming; data.users=data.users||{1:'Darth Vader',2:'Batman'};
         data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
         ['music','books','comics','messages','comicCreations'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
+    data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
+    data.messages.forEach(m=>{if(!Array.isArray(m.comments))m.comments=[];});
         setIdentity(currentAuthUser.id,currentAuthUser.email); localStorage.setItem(KEY,JSON.stringify(data)); render();
       }
     }).subscribe();
@@ -443,11 +494,36 @@ function escapeHTML(value){
 function safeUrl(value){try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:null;}catch{return null;}}
 function renderList(category){
   const container=document.getElementById(category+'List');
+  if(category==='comics'){renderComicCollections();return;}
   if(!data[category].length){container.innerHTML='<div class="empty">NENHUM REGISTRO POR AQUI. QUE TAL COMEÇAR? ✦</div>';return;}
   container.innerHTML=data[category].map(item=>{
     const author=data.users[item.user]||'Unknown player',url=category==='music'?safeUrl(item.status):null;
     return `<div class="item"><div class="item-title">${escapeHTML(item.title)}</div><p>${escapeHTML(item.artist||'')}</p>${item.status&&category!=='music'?`<span class="tag">${escapeHTML(item.status)}</span>`:''}<p>${escapeHTML(item.note||'')}</p><small>ADICIONADO POR @${escapeHTML(author)} · ${escapeHTML(item.date)}</small>${String(item.user)===String(data.activeUser)?`<br><button class="btn btn-danger" onclick="deleteItem('${category}','${escapeHTML(item.id)}')">EXCLUIR</button>`:''}${url?`<p><a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" style="color:#FFE81F;font-size:11px">OUVIR MÚSICA ↗</a></p>`:''}</div>`;
   }).join('');
+}
+const comicCollections={herois:'HERÓIS',pow:'POW!',viloes:'VILÕES',edicao:'EDIÇÃO Nº 001'};
+let selectedComicCollection='';
+function addComic(event){
+ event.preventDefault();const file=document.getElementById('comicFile').files[0];
+ if(!file)return alert('Escolha um arquivo PDF ou imagem para anexar à HQ.');
+ if(!(file.type==='application/pdf'||file.type.startsWith('image/')))return alert('Formato não permitido. Use PDF ou imagem.');
+ if(file.size>1.5*1024*1024)return alert('O arquivo ultrapassa 1,5 MB. Reduza o tamanho antes de enviar.');
+ const reader=new FileReader();reader.onload=()=>{
+  const item={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title:document.getElementById('comicsTitle').value.trim(),artist:document.getElementById('comicsArtist').value.trim(),status:document.getElementById('comicsStatus').value,note:document.getElementById('comicsNote').value.trim(),collection:document.getElementById('comicsCollection').value,fileName:file.name,fileType:file.type,fileData:reader.result,user:data.activeUser,date:new Date().toLocaleDateString('pt-BR')};
+  if(!item.title)return alert('Informe o nome da HQ.');data.comics.unshift(item);save();event.target.reset();selectedComicCollection=item.collection;render();selectComicCollection(selectedComicCollection,document.querySelector(`[data-collection="${selectedComicCollection}"]`));
+ };reader.onerror=()=>alert('Não foi possível ler o arquivo. Tente novamente.');reader.readAsDataURL(file);
+}
+function selectComicCollection(key,button){
+ selectedComicCollection=key;document.querySelectorAll('.comic-panel[data-collection]').forEach(el=>el.classList.toggle('selected',el.dataset.collection===key));
+ const title=document.getElementById('comicCollectionTitle'),hint=document.getElementById('comicCollectionHint');
+ title.textContent=comicCollections[key]||'COLEÇÃO';hint.textContent='Clique em uma HQ para abrir o arquivo. Os anexos ficam compartilhados entre Mari e Luca.';renderComicCollections();
+}
+function renderComicCollections(){
+ Object.keys(comicCollections).forEach(key=>{const el=document.getElementById('count-'+key);if(el)el.textContent=data.comics.filter(c=>(c.collection||'edicao')===key).length+' ARQUIVOS';});
+ const box=document.getElementById('comicCollectionFiles');if(!box)return;
+ if(!selectedComicCollection){box.innerHTML='<div class="empty">Escolha HERÓIS, POW!, VILÕES ou EDIÇÃO Nº 001 para ver os quadrinhos.</div>';return;}
+ const items=data.comics.filter(c=>(c.collection||'edicao')===selectedComicCollection);
+ box.innerHTML=items.map(item=>{const fileLink=item.fileData?`<a href="${item.fileData}" target="_blank" rel="noopener noreferrer">ABRIR / LER ARQUIVO ↗</a>`:'<small>Sem arquivo anexado</small>';const preview=item.fileType&&item.fileType.startsWith('image/')&&item.fileData?`<a href="${item.fileData}" target="_blank" rel="noopener noreferrer"><img src="${item.fileData}" alt="${escapeHTML(item.title)}"></a>`:'';return `<article class="comic-file-card"><div class="item-title">${escapeHTML(item.title)}</div><p>${escapeHTML(item.artist||'')}</p><small>${escapeHTML(item.status||'HQ')} · POR @${escapeHTML(data.users[item.user]||'Tripulante')} · ${escapeHTML(item.date)}</small>${preview}<p>${escapeHTML(item.note||'')}</p><p>${fileLink} ${item.fileName?`<small>(${escapeHTML(item.fileName)})</small>`:''}</p>${String(item.user)===String(data.activeUser)?`<button class="btn btn-danger" onclick="deleteItem('comics','${escapeHTML(item.id)}')">EXCLUIR HQ</button>`:''}</article>`;}).join('')||'<div class="empty">Ainda não há arquivos nesta coleção. Adicione uma HQ acima.</div>';
 }
 function renderContributions(){
   const items=[...data.music.map(i=>({...i,category:'MÚSICA'})),...data.books.map(i=>({...i,category:'LIVRO'})),...data.comics.map(i=>({...i,category:'HQ'}))];
@@ -482,30 +558,35 @@ function render(){
 }
 
 
+function insertMention(fieldId){const field=document.getElementById(fieldId);if(!field)return;const name=data.activeUser==='1'?'Batman':'Darth Vader';const token='@'+name+' ';const a=field.selectionStart??field.value.length,b=field.selectionEnd??field.value.length;field.value=field.value.slice(0,a)+token+field.value.slice(b);field.focus();field.selectionStart=field.selectionEnd=a+token.length;}
+function formatMentions(value){return escapeHTML(value).replace(/@(Darth Vader|Batman|Mari|Luca)/gi,'<span class="mention">@$1</span>');}
 function postMessage(event){
  event.preventDefault();const field=document.getElementById('messageText'),body=field.value.trim();if(!body)return;
- data.messages.unshift({id:String(Date.now()),body,user:data.activeUser,date:new Date().toLocaleString('pt-BR')});save();field.value='';renderMessages();
+ data.messages.unshift({id:String(Date.now()),body,user:data.activeUser,date:new Date().toLocaleString('pt-BR'),comments:[]});save();field.value='';renderMessages();
 }
+function postComment(messageId){const field=document.getElementById('reply-'+messageId);const body=field&&field.value.trim();if(!body)return;const msg=data.messages.find(m=>m.id===messageId);if(!msg)return;if(!Array.isArray(msg.comments))msg.comments=[];msg.comments.push({id:String(Date.now()),body,user:data.activeUser,date:new Date().toLocaleString('pt-BR')});save();renderMessages();}
 function deleteMessage(id){
  const msg=data.messages.find(m=>m.id===id);if(!msg||String(msg.user)!==String(data.activeUser))return alert('Só quem escreveu pode apagar este recado.');
  if(!confirm('Apagar este bilhete do mural?'))return;data.messages=data.messages.filter(m=>m.id!==id);save();renderMessages();
 }
+function deleteComment(messageId,commentId){const msg=data.messages.find(m=>m.id===messageId);if(!msg)return;msg.comments=(msg.comments||[]).filter(c=>!(c.id===commentId&&String(c.user)===String(data.activeUser)));save();renderMessages();}
 function renderMessages(){
  const box=document.getElementById('messageList');if(!box)return;
- box.innerHTML=data.messages.map(m=>`<article class="message-note"><small>DE @${escapeHTML(data.users[m.user]||'Tripulante')} · ${escapeHTML(m.date)}</small><p>${escapeHTML(m.body)}</p>${String(m.user)===String(data.activeUser)?`<button class="btn btn-danger" onclick="deleteMessage('${m.id}')">APAGAR RECADO</button>`:''}</article>`).join('')||'<div class="empty" style="color:#c4cbd1">A estação está em silêncio. Deixe o primeiro recado.</div>';
+ box.innerHTML=data.messages.map(m=>{if(!Array.isArray(m.comments))m.comments=[];const comments=m.comments.map(c=>`<div class="message-comment"><strong>@${escapeHTML(data.users[c.user]||'Tripulante')}</strong> · <small>${escapeHTML(c.date||'')}</small><p>${formatMentions(c.body)}</p>${String(c.user)===String(data.activeUser)?`<button class="btn btn-danger" onclick="deleteComment('${m.id}','${c.id}')">APAGAR</button>`:''}</div>`).join('');return `<article class="message-note"><small>DE @${escapeHTML(data.users[m.user]||'Tripulante')} · ${escapeHTML(m.date)}</small><p>${formatMentions(m.body)}</p>${String(m.user)===String(data.activeUser)?`<button class="btn btn-danger" onclick="deleteMessage('${m.id}')">APAGAR RECADO</button>`:''}<div class="message-comments"><strong>RESPOSTAS / COMENTÁRIOS (${m.comments.length})</strong>${comments}<div class="reply-form"><div><textarea id="reply-${m.id}" maxlength="500" placeholder="Comente ou mencione @${escapeHTML(data.users[m.user]||'a pessoa')}..."></textarea><div class="mention-tools"><button type="button" class="btn btn-outline" onclick="insertMention('reply-${m.id}')">@ MENCIONAR</button></div></div><button class="btn" onclick="postComment('${m.id}')">COMENTAR</button></div></div></article>`;}).join('')||'<div class="empty" style="color:#c4cbd1">A estação está em silêncio. Deixe o primeiro recado.</div>';
 }
 function createStrip(){
  const title=document.getElementById('stripTitle').value.trim()||'Uma aventura qualquer';
  const strip={id:String(Date.now()),title,who1:document.getElementById('stripWho1').value,who2:document.getElementById('stripWho2').value,text1:document.getElementById('stripText1').value.trim()||'Tenho um mau pressentimento...',text2:document.getElementById('stripText2').value.trim()||'É só a segunda-feira.',user:data.activeUser,date:new Date().toLocaleDateString('pt-BR')};
- data.comicCreations.unshift(strip);save();renderStrips();
+ data.comicCreations.unshift(strip);save();renderStrips();setTimeout(()=>{const el=document.getElementById('strip-'+strip.id);if(el)el.classList.add('is-animating');},60);
 }
 function deleteStrip(id){
  const strip=data.comicCreations.find(s=>s.id===id);if(!strip||String(strip.user)!==String(data.activeUser))return alert('Só quem criou esta tirinha pode apagá-la.');
  data.comicCreations=data.comicCreations.filter(s=>s.id!==id);save();renderStrips();
 }
+function replayStrip(id){const el=document.getElementById('strip-'+id);if(!el)return;el.classList.remove('is-animating');void el.offsetWidth;el.classList.add('is-animating');}
 function renderStrips(){
  const box=document.getElementById('savedStrips');if(!box)return;
- box.innerHTML=data.comicCreations.map(s=>`<div class="strip-result"><strong>${escapeHTML(s.title)}</strong><div class="strip-panels"><div class="strip-panel"><strong>${escapeHTML(s.who1)}</strong><p>${escapeHTML(s.text1)}</p></div><div class="strip-panel"><strong>${escapeHTML(s.who2)}</strong><p>${escapeHTML(s.text2)}</p></div></div><small>CRIADO POR @${escapeHTML(data.users[s.user]||'Tripulante')} · ${escapeHTML(s.date)}</small>${String(s.user)===String(data.activeUser)?`<br><button class="btn btn-danger" onclick="deleteStrip('${s.id}')">APAGAR TIRINHA</button>`:''}</div>`).join('')||'<div class="empty">Sua primeira tirinha está esperando para nascer.</div>';
+ box.innerHTML=data.comicCreations.map(s=>`<div class="strip-result" id="strip-${s.id}"><strong>${escapeHTML(s.title)}</strong><div class="strip-panels"><div class="strip-panel"><strong>${escapeHTML(s.who1)}</strong><p>${escapeHTML(s.text1)}</p></div><div class="strip-panel"><strong>${escapeHTML(s.who2)}</strong><p>${escapeHTML(s.text2)}</p></div></div><small>CRIADO POR @${escapeHTML(data.users[s.user]||'Tripulante')} · ${escapeHTML(s.date)}</small><br><button class="btn btn-outline" onclick="replayStrip('${s.id}')">▶ REPRODUZIR ANIMAÇÃO</button>${String(s.user)===String(data.activeUser)?` <button class="btn btn-danger" onclick="deleteStrip('${s.id}')">APAGAR TIRINHA</button>`:''}</div>`).join('')||'<div class="empty">Sua primeira tirinha está esperando para nascer.</div>';
 }
 
 let musicPlaying=false;
@@ -514,32 +595,30 @@ const frame=document.getElementById('musicFrame'),button=document.getElementById
 if(!musicPlaying){frame.src='https://www.youtube.com/embed/HrIJT_4Txqw?autoplay=1&controls=0&loop=1&playlist=HrIJT_4Txqw&rel=0';button.textContent='♫ PAUSAR MÚSICA';musicPlaying=true;}
 else{frame.src='about:blank';button.textContent='♫ TOCAR TEMA DE STAR WARS';musicPlaying=false;}
 }
-let gameTimer=null,gameRemaining=20,gamePoints=0,gameCurrentPlayer='1',gameRunning=false;
-let gameScores={'1':0,'2':0};
+let gameCurrentPlayer='1',gameRunning=false,gameFrame=0,gameLastTime=0,gameDistance=0,gameSpeed=360,gameSpawn=0,gameObstacles=[],gameStars=[];
+let gameScores={'1':0,'2':0},shipY=0,shipVelocity=0,shipGround=250,gameCanvas,gameCtx;
 function updateGameUI(){
-document.getElementById('gameTime').textContent=gameRemaining;
-document.getElementById('gameScore').textContent=gamePoints;
-document.getElementById('gamePlayer').textContent=data.users[gameCurrentPlayer];
-document.getElementById('score1').textContent=gameScores['1'];
-document.getElementById('score2').textContent=gameScores['2'];
+ const player=document.getElementById('gamePlayer');if(player)player.textContent=data.users[gameCurrentPlayer];
+ const score=document.getElementById('gameScore');if(score)score.textContent=Math.floor(gameDistance).toLocaleString('pt-BR');
+ const best=document.getElementById('gameBest');if(best)best.textContent=gameScores[gameCurrentPlayer].toLocaleString('pt-BR');
+ document.getElementById('score1').textContent=gameScores['1'];document.getElementById('score2').textContent=gameScores['2'];
 }
-function spawnTarget(){
-const arena=document.getElementById('gameArena');arena.querySelectorAll('.target').forEach(el=>el.remove());if(!gameRunning)return;
-const target=document.createElement('button');target.className='target';target.type='button';target.textContent=gameCurrentPlayer==='1'?'✦':'🦇';target.setAttribute('aria-label','Acertar alvo');
-const maxX=Math.max(0,arena.clientWidth-64),maxY=Math.max(0,arena.clientHeight-64);
-target.style.left=Math.floor(Math.random()*maxX)+'px';target.style.top=Math.floor(Math.random()*maxY)+'px';
-target.addEventListener('click',()=>{if(!gameRunning)return;gamePoints++;updateGameUI();spawnTarget();});arena.appendChild(target);
+function initShipGame(){gameCanvas=document.getElementById('shipGameCanvas');if(!gameCanvas)return;gameCtx=gameCanvas.getContext('2d');gameStars=Array.from({length:65},()=>({x:Math.random()*900,y:Math.random()*230,r:Math.random()*1.7+.4,s:Math.random()*35+15}));drawShipGame();
+ gameCanvas.addEventListener('pointerdown',jumpShip);window.addEventListener('keydown',e=>{if((e.code==='Space'||e.code==='ArrowUp')&&document.getElementById('game').classList.contains('active')){e.preventDefault();jumpShip();}});
 }
-function startGame(){
-clearInterval(gameTimer);gameRunning=true;gameRemaining=20;gamePoints=0;document.getElementById('gameMessage').textContent='Missão iniciada! Acerte o alvo!';document.getElementById('startGame').textContent='RECOMEÇAR MISSÃO';updateGameUI();spawnTarget();
-gameTimer=setInterval(()=>{gameRemaining--;updateGameUI();if(gameRemaining<=0){clearInterval(gameTimer);gameRunning=false;document.getElementById('gameArena').querySelectorAll('.target').forEach(el=>el.remove());gameScores[gameCurrentPlayer]=gamePoints;document.getElementById('gameMessage').textContent=data.users[gameCurrentPlayer]+' marcou '+gamePoints+' pontos. Troque de jogador para a próxima rodada!';updateGameUI();}},1000);
-}
-function switchGamePlayer(){
-if(gameRunning){alert('Termine a rodada antes de trocar de jogador.');return;}
-gameCurrentPlayer=gameCurrentPlayer==='1'?'2':'1';gameRemaining=20;gamePoints=0;document.getElementById('gameMessage').textContent='Vez de '+data.users[gameCurrentPlayer]+'. Pressione START.';updateGameUI();
-}
+function jumpShip(){if(!gameRunning){if(!gameFrame)startGame();return;}if(shipY>=-1){shipVelocity=-650;}}
+function drawShip(x,y){const c=gameCtx;c.save();c.translate(x,y);c.fillStyle='#FFE81F';c.shadowColor='#FFE81F';c.shadowBlur=12;c.beginPath();c.moveTo(34,0);c.lineTo(-22,-15);c.lineTo(-12,0);c.lineTo(-22,15);c.closePath();c.fill();c.shadowBlur=0;c.fillStyle='#d9f4ff';c.beginPath();c.ellipse(2,0,9,5,0,0,Math.PI*2);c.fill();c.fillStyle='#ff7b24';c.beginPath();c.moveTo(-19,-5);c.lineTo(-34,0);c.lineTo(-19,5);c.closePath();c.fill();c.restore();}
+function drawAsteroid(o){const c=gameCtx;c.save();c.translate(o.x,o.y);c.rotate(o.rot);c.fillStyle='#8b9299';c.strokeStyle='#d1d6da';c.lineWidth=2;c.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,r=o.r*(i%2?.78:1);const px=Math.cos(a)*r,py=Math.sin(a)*r;if(i===0)c.moveTo(px,py);else c.lineTo(px,py);}c.closePath();c.fill();c.stroke();c.fillStyle='#626970';c.beginPath();c.arc(-4,-3,3,0,Math.PI*2);c.arc(5,4,2,0,Math.PI*2);c.fill();c.restore();}
+function drawShipGame(){if(!gameCtx)return;const c=gameCtx;c.clearRect(0,0,900,300);c.fillStyle='#050914';c.fillRect(0,0,900,300);gameStars.forEach(st=>{c.fillStyle='rgba(255,255,255,.8)';c.fillRect(st.x,st.y,st.r,st.r);if(gameRunning){st.x-=st.s/60;if(st.x<0)st.x=900;}});c.fillStyle='#68717c';c.fillRect(0,shipGround+20,900,3);c.fillStyle='#FFE81F';c.fillRect(0,shipGround+23,900,1);drawShip(112,shipGround+shipY);gameObstacles.forEach(drawAsteroid);if(!gameRunning){c.fillStyle='rgba(0,0,0,.35)';c.fillRect(0,0,900,300);c.fillStyle='#FFE81F';c.font='bold 22px Orbitron, sans-serif';c.textAlign='center';c.fillText(gameDistance>0?'MISSÃO ENCERRADA':'PRONTO PARA DECOLAR?',450,125);c.fillStyle='#fff';c.font='13px monospace';c.fillText(gameDistance>0?'Clique em INICIAR MISSÃO para tentar novamente':'Pressione ESPAÇO ou toque para saltar',450,155);}}
+function gameLoop(timestamp){if(!gameRunning)return;const dt=Math.min((timestamp-gameLastTime)/1000,.035);gameLastTime=timestamp;gameDistance+=dt*gameSpeed/22;gameSpeed=Math.min(700,360+gameDistance*1.2);shipVelocity+=1700*dt;shipY+=shipVelocity*dt;if(shipY>0){shipY=0;shipVelocity=0;}gameSpawn-=dt;if(gameSpawn<=0){const radius=18+Math.random()*12;gameObstacles.push({x:930,y:shipGround+20-radius,r:radius,rot:Math.random()*6});gameSpawn=Math.max(.62,1.35-(gameSpeed-360)/600)+Math.random()*.45;}gameObstacles.forEach(o=>{o.x-=gameSpeed*dt;o.rot+=dt*.8;});gameObstacles=gameObstacles.filter(o=>o.x>-50);
+ const shipBox={x:90,y:shipGround+shipY-12,w:42,h:24};for(const o of gameObstacles){const ox=o.x,oy=o.y;if(shipBox.x<ox+o.r-5&&shipBox.x+shipBox.w>ox-o.r+5&&shipBox.y<oy+o.r-5&&shipBox.y+shipBox.h>oy-o.r+5){endGame();return;}}
+ updateGameUI();drawShipGame();gameFrame=requestAnimationFrame(gameLoop);}
+function startGame(){cancelAnimationFrame(gameFrame);gameRunning=true;gameDistance=0;gameSpeed=360;gameSpawn=.9;gameObstacles=[];shipY=0;shipVelocity=0;gameLastTime=performance.now();document.getElementById('gameMessage').textContent='Nave em movimento! Salte para desviar dos asteroides.';document.getElementById('startGame').textContent='REINICIAR MISSÃO';updateGameUI();gameFrame=requestAnimationFrame(gameLoop);}
+function endGame(){gameRunning=false;cancelAnimationFrame(gameFrame);const score=Math.floor(gameDistance);gameScores[gameCurrentPlayer]=Math.max(gameScores[gameCurrentPlayer],score);document.getElementById('gameMessage').textContent=data.users[gameCurrentPlayer]+' percorreu '+score+' unidades. Troque o piloto ou tente novamente.';document.getElementById('startGame').textContent='TENTAR NOVAMENTE';updateGameUI();drawShipGame();}
+function switchGamePlayer(){if(gameRunning){alert('Termine a missão antes de trocar de piloto.');return;}gameCurrentPlayer=gameCurrentPlayer==='1'?'2':'1';gameDistance=0;updateGameUI();document.getElementById('gameMessage').textContent='Agora é a vez de '+data.users[gameCurrentPlayer]+'.';drawShipGame();}
 
 updateGameUI();
+initShipGame();
 initAuth();
 </script>
 </body>
