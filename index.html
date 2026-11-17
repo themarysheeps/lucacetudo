@@ -111,7 +111,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 .message-note small{color:#65543b}
 .strip-result{margin-top:20px;padding:15px;background:#f7edcf;border:2px solid #201a12;color:#201a12}
 .strip-panels{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.strip-panel{background:#fff9e9;border:2px solid #201a12;padding:14px;min-height:135px}
+.strip-panel{position:relative;background:#fff9e9;border:2px solid #201a12;padding:14px;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}.strip-character{height:92px;width:100%;display:flex;align-items:center;justify-content:center;position:relative}.strip-doll{position:relative;width:42px;height:78px;animation:dollBob 1.3s ease-in-out infinite}.strip-doll .head{position:absolute;top:0;left:9px;width:25px;height:25px;border-radius:50%;background:#f2c9a5;border:3px solid #17120a}.strip-doll .body{position:absolute;top:25px;left:7px;width:29px;height:32px;border-radius:9px 9px 5px 5px;background:#252a30;border:2px solid #17120a}.strip-doll .legs{position:absolute;top:55px;left:10px;width:8px;height:21px;background:#17120a;box-shadow:14px 0 #17120a}.strip-doll.jedi .body{background:#d7c49a}.strip-doll.sith .body{background:#9d1717}.strip-doll.hero .head{background:#171717}.strip-doll.droid .head{border-radius:8px;background:#c6d0d7}.speech-bubble{position:relative;align-self:stretch;background:#fff;border:2px solid #17120a;border-radius:15px;padding:9px;color:#17120a;font-size:12px;min-height:46px;text-align:center}.speech-bubble:after{content:"";position:absolute;top:-9px;left:50%;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:9px solid #17120a}
 .strip-panel:before{content:'QUADRO';font:10px 'Space Mono';color:#a92e24;letter-spacing:2px}
 .strip-panel strong{display:block;font-family:'Bangers';font-size:20px;margin:8px 0}
 .strip-panel p{font-size:12px;color:#FFE81F}
@@ -180,6 +180,17 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 .game-help{font-size:10px;color:#aeb8c4;margin-top:8px}
 @media(max-width:600px){.reply-form{grid-template-columns:1fr}.reply-form .btn{justify-self:start}#shipGameCanvas{height:230px}}
 
+
+/* Cineminha: créditos em perspectiva */
+.cinema-screen{height:580px;max-height:72vh;overflow:hidden;position:relative;background:radial-gradient(ellipse at center,#111827 0,#030407 65%);border:1px solid #5c5018;border-radius:8px;perspective:420px;margin:20px 0}
+.cinema-stars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#ffe81f 1px,transparent 1px);background-size:71px 71px,113px 113px;background-position:0 0,29px 41px;opacity:.55}
+.cinema-crawl{position:absolute;left:9%;right:9%;top:100%;color:#FFE81F;text-align:justify;font-family:Orbitron,Arial,sans-serif;font-weight:700;font-size:clamp(15px,2vw,22px);line-height:1.75;transform-origin:50% 0;transform:rotateX(24deg);animation:cinemaRise 95s linear infinite;text-shadow:0 0 8px rgba(255,232,31,.22)}
+.cinema-crawl h2,.cinema-crawl h3{text-align:center;color:#FFE81F}.cinema-crawl h2{font-size:1.5em;letter-spacing:.16em}.cinema-crawl h3{font-size:1.3em;letter-spacing:.12em;margin:16px 0 35px}.cinema-crawl p{margin:0 0 25px}.cinema-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@keyframes dollBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
+@keyframes cinemaRise{from{top:100%;transform:rotateX(24deg) translateZ(0)}to{top:-260%;transform:rotateX(24deg) translateZ(-250px)}}
+.movie-list{display:grid;gap:9px;margin-top:14px}.movie-item{padding:12px;border:1px solid #514719;background:#11100a;display:flex;justify-content:space-between;gap:10px;align-items:center}.tarot-board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.tarot-card{min-height:160px;border:1px solid #FFE81F;background:linear-gradient(145deg,#201a36,#090811);color:#FFE81F;border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;font-family:Orbitron,sans-serif}.tarot-card .tarot-symbol{font-size:42px;margin-bottom:10px}.tarot-card:disabled{cursor:default;opacity:1}.tarot-reading{padding:18px;border:1px solid #FFE81F;background:#100e0a;line-height:1.7;margin-top:15px}.tarot-reading p{margin:8px 0}.crown{color:#FFE81F;font-size:20px;text-shadow:0 0 10px #FFE81F}.ranking-line{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #333}
+@media(max-width:600px){.tarot-board{grid-template-columns:1fr}.cinema-screen{height:520px}}
+
 </style>
 </head>
 <body>
@@ -212,6 +223,8 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
   <button onclick="showTab('profiles',this)">♙ PERFIS</button>
   <button onclick="showTab('messages',this)">✉ MURAL / COMENTÁRIOS</button>
   <button onclick="showTab('game',this)">⚔ MISSÕES</button>
+  <button onclick="showTab('cinema',this)">✦ CINEMINHA</button>
+  <button onclick="showTab('tarot',this)">☾ TARÔ CÓSMICO</button>
   <button id="logoutButton" type="button" onclick="logout()">SAIR</button>
 </nav>
 
@@ -339,9 +352,34 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 <div class="game-arena" id="gameArena"><canvas id="shipGameCanvas" width="900" height="300" aria-label="Jogo de nave: pressione espaço ou toque para saltar"></canvas></div>
 <p class="game-help" id="gameMessage">Pressione ESPAÇO, ↑ ou toque na tela para saltar. Evite os asteroides.</p>
 <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px"><button class="btn" id="startGame" onclick="startGame()">INICIAR MISSÃO</button><button class="btn btn-outline" onclick="switchGamePlayer()">TROCAR PILOTO</button></div>
-<div class="game-stats"><span>VADER: <b id="score1">0</b></span><span>BATMAN: <b id="score2">0</b></span></div>
+<div class="game-stats"><span>VADER: <b id="score1">0</b></span><span>BATMAN: <b id="score2">0</b></span><small>♛ A coroa fica com quem tiver o maior recorde.</small></div>
 </div><div class="comic-box">QUE A FORÇA ESTEJA COM O MAIS RÁPIDO! <span>★</span></div>
 </section>
+
+<section id="cinema" class="section">
+ <div class="eyebrow">ARQUIVO DE EXIBIÇÃO / EPISÓDIO I</div><h2>O nosso cineminha</h2>
+ <p>Apaguem as luzes, preparem a pipoca e deixem os créditos rolarem.</p>
+ <div class="cinema-screen" id="cinemaScreen"><div class="cinema-stars"></div><div class="cinema-crawl" id="cinemaCrawl">
+ <h2>EPISÓDIO I</h2><h3>A ALIANÇA IMPROVÁVEL</h3>
+ <p>Numa galaxiezinha não tão distante assim (mais especificamente entre abas abertas no Chrome), a Força andava meio desbalanceada.</p>
+ <p>De um lado, <strong>Luca</strong>. Um Jedi purista, devoto do Lado Luminoso, que acredita firmemente que código precisa de identação perfeita, que filmes clássicos devem ser assistidos em silêncio mortal e que a paz e a harmonia são o caminho para o sucesso.</p>
+ <p>Do outro, <strong>Mari</strong>. Uma Lorde Sith orgulhosa, movida a puro puro ódio de Jedis, caos criativo e a certeza absoluta de que o Lado Sombrio oferece café expresso de melhor qualidade.</p>
+ <p>Certa vez, enquanto disputavam o último pedaço de pizza na bancada de trabalho, os sabres de luz se cruzaram. faíscas voaram. O universo prendeu a respiração.</p>
+ <p>Foi quando Luca olhou para Mari, Mari olhou para Luca e ambos perceberam uma verdade cósmica incontestável: dominar a galáxia sozinha daria muito trabalho, e discussões sobre design system eram infinitamente melhores com alguém para discordar.</p>
+ <p>Eles não uniram forças por romance, destino místico ou profecia antiga. Uniram-se porque o caos dela precisava da paciência dele, e a paz dele estava à beira de um colapso que só o humor ácido dela poderia salvar.</p>
+ <p>Dessa trégua armada nasceu este site.</p>
+ <p>Não para salvar o universo, mas para garantir que, se o Império cair, pelo menos a gente deixe um bom portfólio para contar a história.</p>
+ <p>Que a Força esteja com vocês... e que os bugs fiquem bem longe daqui.</p>
+ </div></div>
+ <div class="cinema-controls"><button class="btn" onclick="restartCrawl()">▶ RECOMEÇAR CRÉDITOS</button><a class="btn btn-outline" href="https://discord.com/login" target="_blank" rel="noopener noreferrer">ENTRAR NO DISCORD ↗</a></div>
+ <div class="card" style="margin-top:22px"><h3>FILMES NA NOSSA LISTA</h3><p>Adicionem os filmes que querem assistir juntos. Depois, sorteiem a próxima sessão.</p><form onsubmit="addMovie(event)"><input id="movieTitle" required maxlength="100" placeholder="Nome do filme"><button class="btn">ADICIONAR À LISTA</button></form><div class="movie-list" id="movieList"></div><button class="btn" style="margin-top:15px" onclick="drawMovie()">🎲 SORTEAR FILME DA VEZ</button><div class="tarot-reading" id="movieDraw" aria-live="polite">O próximo filme ainda não foi sorteado.</div></div>
+</section>
+<section id="tarot" class="section">
+ <div class="eyebrow">ORÁCULO INTERGALÁCTICO / 009</div><h2>Tarô cósmico</h2><p>Escolha três cartas. O destino foi consultado, mas não prometemos profissionalismo.</p>
+ <div class="tarot-board" id="tarotBoard"><button class="tarot-card" onclick="drawTarot(0)"><span class="tarot-symbol">✦</span><strong>ESCOLHER CARTA I</strong><small>O que vem aí?</small></button><button class="tarot-card" onclick="drawTarot(1)"><span class="tarot-symbol">☾</span><strong>ESCOLHER CARTA II</strong><small>O que está oculto?</small></button><button class="tarot-card" onclick="drawTarot(2)"><span class="tarot-symbol">♜</span><strong>ESCOLHER CARTA III</strong><small>Qual o conselho?</small></button></div>
+ <div class="tarot-reading" id="tarotReading">As cartas estão viradas para baixo. Escolha a primeira.</div><button class="btn btn-outline" onclick="resetTarot()">EMBARALHAR NOVAMENTE</button>
+</section>
+
 </main>
 
 <button class="music-control" id="musicToggle" onclick="toggleMusic()">♫ TOCAR TEMA DE STAR WARS</button>
@@ -364,10 +402,10 @@ const USER_EMAILS={
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let data;
 try { data=JSON.parse(localStorage.getItem(KEY)) || null; } catch { data=null; }
-if(!data) data={users:{1:'Darth Vader',2:'Batman'},profiles:{1:{photo:'',bio:''},2:{photo:'',bio:''}},activeUser:'1',startDate:'',music:[],books:[],comics:[],messages:[],comicCreations:[]};
-data.users=data.users||{1:'Darth Vader',2:'Batman'};
+if(!data) data={users:{1:'Darth Vader',2:'Batman'},profiles:{1:{photo:'',bio:''},2:{photo:'',bio:''}},activeUser:'1',startDate:'',music:[],books:[],comics:[],messages:[],comicCreations:[],movies:[],gameScores:{'1':0,'2':0}};
+data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};
 data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
-['music','books','comics','messages','comicCreations'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
+['music','books','comics','messages','comicCreations','movies'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
 data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
 data.messages.forEach(m=>{if(!Array.isArray(m.comments))m.comments=[];});
 let currentAuthUser=null, realtimeChannel=null, cloudReady=false, saveQueue=Promise.resolve();
@@ -397,9 +435,9 @@ async function loadCloudState(){
   if(error) throw error;
   if(row && row.state){
     data=row.state;
-    data.users=data.users||{1:'Darth Vader',2:'Batman'};
+    data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};
     data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
-    ['music','books','comics','messages','comicCreations'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
+    ['music','books','comics','messages','comicCreations','movies'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
     data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
     data.messages.forEach(m=>{if(!Array.isArray(m.comments))m.comments=[];});
   } else {
@@ -414,9 +452,9 @@ async function loadCloudState(){
     .on('postgres_changes',{event:'UPDATE',schema:'public',table:'universe_state',filter:'id=eq.main'},payload=>{
       if(payload.new?.state && currentAuthUser){
         const incoming=payload.new.state;
-        data=incoming; data.users=data.users||{1:'Darth Vader',2:'Batman'};
+        data=incoming; data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};
         data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
-        ['music','books','comics','messages','comicCreations'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
+        ['music','books','comics','messages','comicCreations','movies'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
     data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
     data.messages.forEach(m=>{if(!Array.isArray(m.comments))m.comments=[];});
         setIdentity(currentAuthUser.id,currentAuthUser.email); localStorage.setItem(KEY,JSON.stringify(data)); render();
@@ -456,7 +494,7 @@ function setActiveUser(){return;}
 function showTab(id,button){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');button.classList.add('active');
+  document.getElementById(id).classList.add('active');if(button)button.classList.add('active');if(id==='cinema')restartCrawl();
 }
 function changeUser(){alert('O jogador é definido pela conta autenticada. Saia e entre com a outra conta para alternar.');}
 function setActiveUser(){return;}
@@ -554,7 +592,7 @@ function render(){
   document.getElementById('user1Display').textContent=data.users[1];
   document.getElementById('user2Display').textContent=data.users[2];
   if(currentAuthUser) document.getElementById('currentUser').textContent='CONECTADO COMO '+(data.activeUser==='1'?'Darth Vader':'Batman')+' · alterações sincronizadas online.';
-  renderDays();renderProfiles();['music','books','comics'].forEach(renderList);renderContributions();renderMessages();renderStrips();
+  renderDays();renderProfiles();['music','books','comics'].forEach(renderList);renderContributions();renderMessages();renderStrips();renderMovies();updateGameUI();
 }
 
 
@@ -584,10 +622,21 @@ function deleteStrip(id){
  data.comicCreations=data.comicCreations.filter(s=>s.id!==id);save();renderStrips();
 }
 function replayStrip(id){const el=document.getElementById('strip-'+id);if(!el)return;el.classList.remove('is-animating');void el.offsetWidth;el.classList.add('is-animating');}
+function characterClass(name){const n=String(name).toLowerCase();return n.includes('jedi')?'jedi':n.includes('sombr')||n.includes('sith')?'sith':n.includes('mascar')||n.includes('herói')?'hero':'droid';}
 function renderStrips(){
  const box=document.getElementById('savedStrips');if(!box)return;
- box.innerHTML=data.comicCreations.map(s=>`<div class="strip-result" id="strip-${s.id}"><strong>${escapeHTML(s.title)}</strong><div class="strip-panels"><div class="strip-panel"><strong>${escapeHTML(s.who1)}</strong><p>${escapeHTML(s.text1)}</p></div><div class="strip-panel"><strong>${escapeHTML(s.who2)}</strong><p>${escapeHTML(s.text2)}</p></div></div><small>CRIADO POR @${escapeHTML(data.users[s.user]||'Tripulante')} · ${escapeHTML(s.date)}</small><br><button class="btn btn-outline" onclick="replayStrip('${s.id}')">▶ REPRODUZIR ANIMAÇÃO</button>${String(s.user)===String(data.activeUser)?` <button class="btn btn-danger" onclick="deleteStrip('${s.id}')">APAGAR TIRINHA</button>`:''}</div>`).join('')||'<div class="empty">Sua primeira tirinha está esperando para nascer.</div>';
+ box.innerHTML=data.comicCreations.map(s=>`<div class="strip-result" id="strip-${s.id}"><strong>${escapeHTML(s.title)}</strong><div class="strip-panels"><div class="strip-panel"><div class="strip-character"><div class="strip-doll ${characterClass(s.who1)}"><i class="head"></i><i class="body"></i><i class="legs"></i></div></div><div class="speech-bubble">${escapeHTML(s.text1)}</div><strong>${escapeHTML(s.who1)}</strong></div><div class="strip-panel"><div class="strip-character"><div class="strip-doll ${characterClass(s.who2)}"><i class="head"></i><i class="body"></i><i class="legs"></i></div></div><div class="speech-bubble">${escapeHTML(s.text2)}</div><strong>${escapeHTML(s.who2)}</strong></div></div><small>CRIADO POR @${escapeHTML(data.users[s.user]||'Tripulante')} · ${escapeHTML(s.date)}</small><br><button class="btn btn-outline" onclick="replayStrip('${s.id}')">▶ REPRODUZIR ANIMAÇÃO</button>${String(s.user)===String(data.activeUser)?` <button class="btn btn-danger" onclick="deleteStrip('${s.id}')">APAGAR TIRINHA</button>`:''}</div>`).join('')||'<div class="empty">Sua primeira tirinha está esperando para nascer.</div>';
 }
+
+
+function restartCrawl(){const el=document.getElementById('cinemaCrawl');el.style.animation='none';void el.offsetWidth;el.style.animation='';}
+function addMovie(event){event.preventDefault();const field=document.getElementById('movieTitle'),title=field.value.trim();if(!title)return;data.movies.unshift({id:String(Date.now()),title,user:data.activeUser,date:new Date().toLocaleDateString('pt-BR')});save();field.value='';renderMovies();}
+function renderMovies(){const box=document.getElementById('movieList');if(!box)return;box.innerHTML=(data.movies||[]).map(m=>`<div class="movie-item"><span>${escapeHTML(m.title)} <small>· @${escapeHTML(data.users[m.user]||'Tripulante')}</small></span>${String(m.user)===String(data.activeUser)?`<button class="btn btn-danger" onclick="removeMovie('${m.id}')">REMOVER</button>`:''}</div>`).join('')||'<div class="empty">A lista ainda está vazia. Adicionem o primeiro filme.</div>';}
+function removeMovie(id){data.movies=(data.movies||[]).filter(m=>!(m.id===id&&String(m.user)===String(data.activeUser)));save();renderMovies();}
+function drawMovie(){const out=document.getElementById('movieDraw');if(!data.movies||!data.movies.length){out.textContent='Não há filmes na lista. Adicionem alguns antes do sorteio!';return;}const pick=data.movies[Math.floor(Math.random()*data.movies.length)];out.innerHTML='🎬 FILME DA VEZ: <strong>'+escapeHTML(pick.title)+'</strong><br>O destino escolheu. Sem reclamações com o Conselho Jedi.';}
+const tarotDeck=[['O Jedi Atrasado','Você vai encontrar equilíbrio espiritual… depois de apertar soneca mais três vezes.'],['A Estrela da Morte','Uma grande mudança se aproxima. Provavelmente é só uma atualização obrigatória.'],['O Café Cósmico','Uma energia intensa entra na sua vida: cafeína. Beba água também.'],['O Gato de Schrödinger','Uma oportunidade pode ou não aparecer. Você só vai saber se abrir a mensagem.'],['A Torre do Wi-Fi','Algo pode cair inesperadamente. Faça backup e não culpe a Força.'],['A Imperatriz dos Boletos','Abundância material no horizonte, mas o cartão pede cautela.'],['O Eremita Online','Você precisa de um tempo sozinho… mas vai continuar olhando o celular.'],['O Carro Espacial','Avanço rápido! Só confira se não esqueceu o freio de mão.'],['A Lua de Algoritmo','Nem tudo é o que parece. Principalmente recomendações do YouTube às três da manhã.'],['O Sol de Tatooine','Um dia brilhante vem aí. Protetor solar, por favor.'],['O Enforcado no Loading','A resposta virá. A barra está em 99% há meia hora.'],['A Força do Ctrl+Z','Você tem poder para recomeçar. Use-o antes de mandar aquela mensagem.']];let tarotPicks=[];
+function drawTarot(slot){if(tarotPicks[slot])return;let available=tarotDeck.filter(c=>!tarotPicks.some(p=>p[0]===c[0]));const card=available[Math.floor(Math.random()*available.length)];tarotPicks[slot]=card;const buttons=document.querySelectorAll('#tarotBoard .tarot-card');const b=buttons[slot];b.disabled=true;b.innerHTML=`<span class="tarot-symbol">✧</span><strong>${card[0]}</strong><small>${card[1]}</small>`;const count=tarotPicks.filter(Boolean).length;document.getElementById('tarotReading').innerHTML=`<strong>${count}/3 CARTAS REVELADAS</strong><p>${escapeHTML(card[0])}: ${escapeHTML(card[1])}</p>`;if(count===3){const lines=tarotPicks.map((c,i)=>`<p><strong>${['PASSADO','PRESENTE','FUTURO'][i]} — ${escapeHTML(c[0])}:</strong> ${escapeHTML(c[1])}</p>`).join('');document.getElementById('tarotReading').innerHTML='<h3>SUA PREVISÃO INTERGALÁCTICA</h3>'+lines+'<p><strong>Veredito:</strong> a galáxia recomenda bom humor, um lanche e não tomar decisões importantes com fome.</p>';}}
+function resetTarot(){tarotPicks=[];document.querySelectorAll('#tarotBoard .tarot-card').forEach((b,i)=>{b.disabled=false;b.innerHTML=`<span class="tarot-symbol">${['✦','☾','♜'][i]}</span><strong>ESCOLHER CARTA ${['I','II','III'][i]}</strong><small>${['O que vem aí?','O que está oculto?','Qual o conselho?'][i]}</small>`;});document.getElementById('tarotReading').textContent='As cartas estão viradas para baixo. Escolha a primeira.';}
 
 let musicPlaying=false;
 function toggleMusic(){
@@ -596,12 +645,13 @@ if(!musicPlaying){frame.src='https://www.youtube.com/embed/HrIJT_4Txqw?autoplay=
 else{frame.src='about:blank';button.textContent='♫ TOCAR TEMA DE STAR WARS';musicPlaying=false;}
 }
 let gameCurrentPlayer='1',gameRunning=false,gameFrame=0,gameLastTime=0,gameDistance=0,gameSpeed=360,gameSpawn=0,gameObstacles=[],gameStars=[];
-let gameScores={'1':0,'2':0},shipY=0,shipVelocity=0,shipGround=250,gameCanvas,gameCtx;
+let gameScores=data.gameScores||{'1':0,'2':0},shipY=0,shipVelocity=0,shipGround=250,gameCanvas,gameCtx;
 function updateGameUI(){
+ gameScores=data.gameScores||gameScores;
  const player=document.getElementById('gamePlayer');if(player)player.textContent=data.users[gameCurrentPlayer];
  const score=document.getElementById('gameScore');if(score)score.textContent=Math.floor(gameDistance).toLocaleString('pt-BR');
  const best=document.getElementById('gameBest');if(best)best.textContent=gameScores[gameCurrentPlayer].toLocaleString('pt-BR');
- document.getElementById('score1').textContent=gameScores['1'];document.getElementById('score2').textContent=gameScores['2'];
+ document.getElementById('score1').innerHTML=(gameScores['1']>gameScores['2']?'<span class=\"crown\">♛</span> ':'')+gameScores['1'];document.getElementById('score2').innerHTML=(gameScores['2']>gameScores['1']?'<span class=\"crown\">♛</span> ':'')+gameScores['2'];
 }
 function initShipGame(){gameCanvas=document.getElementById('shipGameCanvas');if(!gameCanvas)return;gameCtx=gameCanvas.getContext('2d');gameStars=Array.from({length:65},()=>({x:Math.random()*900,y:Math.random()*230,r:Math.random()*1.7+.4,s:Math.random()*35+15}));drawShipGame();
  gameCanvas.addEventListener('pointerdown',jumpShip);window.addEventListener('keydown',e=>{if((e.code==='Space'||e.code==='ArrowUp')&&document.getElementById('game').classList.contains('active')){e.preventDefault();jumpShip();}});
@@ -610,11 +660,11 @@ function jumpShip(){if(!gameRunning){if(!gameFrame)startGame();return;}if(shipY>
 function drawShip(x,y){const c=gameCtx;c.save();c.translate(x,y);c.fillStyle='#FFE81F';c.shadowColor='#FFE81F';c.shadowBlur=12;c.beginPath();c.moveTo(34,0);c.lineTo(-22,-15);c.lineTo(-12,0);c.lineTo(-22,15);c.closePath();c.fill();c.shadowBlur=0;c.fillStyle='#d9f4ff';c.beginPath();c.ellipse(2,0,9,5,0,0,Math.PI*2);c.fill();c.fillStyle='#ff7b24';c.beginPath();c.moveTo(-19,-5);c.lineTo(-34,0);c.lineTo(-19,5);c.closePath();c.fill();c.restore();}
 function drawAsteroid(o){const c=gameCtx;c.save();c.translate(o.x,o.y);c.rotate(o.rot);c.fillStyle='#8b9299';c.strokeStyle='#d1d6da';c.lineWidth=2;c.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,r=o.r*(i%2?.78:1);const px=Math.cos(a)*r,py=Math.sin(a)*r;if(i===0)c.moveTo(px,py);else c.lineTo(px,py);}c.closePath();c.fill();c.stroke();c.fillStyle='#626970';c.beginPath();c.arc(-4,-3,3,0,Math.PI*2);c.arc(5,4,2,0,Math.PI*2);c.fill();c.restore();}
 function drawShipGame(){if(!gameCtx)return;const c=gameCtx;c.clearRect(0,0,900,300);c.fillStyle='#050914';c.fillRect(0,0,900,300);gameStars.forEach(st=>{c.fillStyle='rgba(255,255,255,.8)';c.fillRect(st.x,st.y,st.r,st.r);if(gameRunning){st.x-=st.s/60;if(st.x<0)st.x=900;}});c.fillStyle='#68717c';c.fillRect(0,shipGround+20,900,3);c.fillStyle='#FFE81F';c.fillRect(0,shipGround+23,900,1);drawShip(112,shipGround+shipY);gameObstacles.forEach(drawAsteroid);if(!gameRunning){c.fillStyle='rgba(0,0,0,.35)';c.fillRect(0,0,900,300);c.fillStyle='#FFE81F';c.font='bold 22px Orbitron, sans-serif';c.textAlign='center';c.fillText(gameDistance>0?'MISSÃO ENCERRADA':'PRONTO PARA DECOLAR?',450,125);c.fillStyle='#fff';c.font='13px monospace';c.fillText(gameDistance>0?'Clique em INICIAR MISSÃO para tentar novamente':'Pressione ESPAÇO ou toque para saltar',450,155);}}
-function gameLoop(timestamp){if(!gameRunning)return;const dt=Math.min((timestamp-gameLastTime)/1000,.035);gameLastTime=timestamp;gameDistance+=dt*gameSpeed/22;gameSpeed=Math.min(700,360+gameDistance*1.2);shipVelocity+=1700*dt;shipY+=shipVelocity*dt;if(shipY>0){shipY=0;shipVelocity=0;}gameSpawn-=dt;if(gameSpawn<=0){const radius=18+Math.random()*12;gameObstacles.push({x:930,y:shipGround+20-radius,r:radius,rot:Math.random()*6});gameSpawn=Math.max(.62,1.35-(gameSpeed-360)/600)+Math.random()*.45;}gameObstacles.forEach(o=>{o.x-=gameSpeed*dt;o.rot+=dt*.8;});gameObstacles=gameObstacles.filter(o=>o.x>-50);
+function gameLoop(timestamp){if(!gameRunning)return;const dt=Math.min((timestamp-gameLastTime)/1000,.035);gameLastTime=timestamp;gameDistance+=dt*gameSpeed/22;gameSpeed=Math.min(700,360+gameDistance*1.2);shipVelocity+=1700*dt;shipY+=shipVelocity*dt;if(shipY>0){shipY=0;shipVelocity=0;}gameSpawn-=dt;if(gameSpawn<=0){const radius=18+Math.random()*12;const fromTop=Math.random()<.48;gameObstacles.push({x:930,y:fromTop?(55+Math.random()*95):(shipGround+20-radius),r:radius,rot:Math.random()*6,fromTop});gameSpawn=Math.max(.62,1.35-(gameSpeed-360)/600)+Math.random()*.45;}gameObstacles.forEach(o=>{o.x-=gameSpeed*dt;o.rot+=dt*.8;});gameObstacles=gameObstacles.filter(o=>o.x>-50);
  const shipBox={x:90,y:shipGround+shipY-12,w:42,h:24};for(const o of gameObstacles){const ox=o.x,oy=o.y;if(shipBox.x<ox+o.r-5&&shipBox.x+shipBox.w>ox-o.r+5&&shipBox.y<oy+o.r-5&&shipBox.y+shipBox.h>oy-o.r+5){endGame();return;}}
  updateGameUI();drawShipGame();gameFrame=requestAnimationFrame(gameLoop);}
 function startGame(){cancelAnimationFrame(gameFrame);gameRunning=true;gameDistance=0;gameSpeed=360;gameSpawn=.9;gameObstacles=[];shipY=0;shipVelocity=0;gameLastTime=performance.now();document.getElementById('gameMessage').textContent='Nave em movimento! Salte para desviar dos asteroides.';document.getElementById('startGame').textContent='REINICIAR MISSÃO';updateGameUI();gameFrame=requestAnimationFrame(gameLoop);}
-function endGame(){gameRunning=false;cancelAnimationFrame(gameFrame);const score=Math.floor(gameDistance);gameScores[gameCurrentPlayer]=Math.max(gameScores[gameCurrentPlayer],score);document.getElementById('gameMessage').textContent=data.users[gameCurrentPlayer]+' percorreu '+score+' unidades. Troque o piloto ou tente novamente.';document.getElementById('startGame').textContent='TENTAR NOVAMENTE';updateGameUI();drawShipGame();}
+function endGame(){gameRunning=false;cancelAnimationFrame(gameFrame);const score=Math.floor(gameDistance);gameScores[gameCurrentPlayer]=Math.max(gameScores[gameCurrentPlayer],score);data.gameScores=gameScores;save();document.getElementById('gameMessage').textContent=data.users[gameCurrentPlayer]+' percorreu '+score+' unidades. Troque o piloto ou tente novamente.';document.getElementById('startGame').textContent='TENTAR NOVAMENTE';updateGameUI();drawShipGame();}
 function switchGamePlayer(){if(gameRunning){alert('Termine a missão antes de trocar de piloto.');return;}gameCurrentPlayer=gameCurrentPlayer==='1'?'2':'1';gameDistance=0;updateGameUI();document.getElementById('gameMessage').textContent='Agora é a vez de '+data.users[gameCurrentPlayer]+'.';drawShipGame();}
 
 updateGameUI();
