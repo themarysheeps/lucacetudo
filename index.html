@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Starbound — A Private Universe</title>
+<title>Lucacetudo</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&family=Bangers&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -100,13 +100,13 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 
 <header class="intro">
   <div class="small">A LONG TIME AGO, IN A GALAXY NOT SO FAR AWAY...</div>
-  <div class="logo">STARBOUND</div>
-  <p>TWO PEOPLE. ONE UNIVERSE.<br>AN INFINITE COLLECTION OF MOMENTS.</p>
+  <div class="logo">LUCACETUDO</div>
+  <p>UMA FANFIC DO UNIVERSO STAR WARS.<br>E TALVEZ BATMAN.</p>
 </header>
 
 <nav>
   <button class="active" onclick="showTab('home',this)">✦ HOME</button>
-  <button onclick="showTab('time',this)">◷ NOSSO TEMPO</button>
+  <button onclick="showTab('time',this)">◷ TEMPO</button>
   <button onclick="showTab('music',this)">♫ MÚSICAS</button>
   <button onclick="showTab('books',this)">▤ LIVROS</button>
   <button onclick="showTab('comics',this)">▣ HQs</button>
@@ -117,11 +117,11 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 <main>
 <section id="home" class="section active">
   <div class="eyebrow">TRANSMISSION RECEIVED / 001</div>
-  <h2>Welcome to our universe.</h2>
-  <div class="comic-box">HOLY COSMIC CONNECTION!<br><span>THIS IS OUR LITTLE UNIVERSE.</span></div>
+  <h2>Bem-vindo(a) ao universo Lucacetudo.</h2>
+  <div class="comic-box">LUCACETUDO!<br><span>OWNED BY MARINA.</span></div>
   <div class="grid">
-    <div class="card"><div class="eyebrow">CURRENT MISSION</div><h3>Our little archive</h3><p>Um lugar para guardar músicas, histórias, descobertas e todas as pequenas coisas que fazem parte do nosso universo.</p></div>
-    <div class="card"><div class="eyebrow">SYSTEM STATUS</div><h3>Two players online</h3><p>Dois protagonistas, referências demais e uma quantidade questionável de obsessões compartilhadas.</p></div>
+    <div class="card"><div class="eyebrow">MISSÃO</div><h3>Arquivozinho</h3><p>Para guardar músicas e outras coisas idiotas.</p></div>
+    <div class="card"><div class="eyebrow">STATUS</div><h3>Dois players online</h3><p>
   </div>
   <div class="card"><div class="eyebrow">LATEST TRANSMISSIONS</div><h3>Últimas adições</h3><div id="recentItems"></div></div>
 </section>
@@ -136,7 +136,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 </section>
 
 <section id="music" class="section">
-  <div class="eyebrow">SOUNDTRACK / 003</div><h2>Our soundtrack.</h2><p>As músicas que acompanham nossos dias, lembranças e momentos.</p>
+  <div class="eyebrow">SOUNDTRACK / 003</div><h2>Our soundtrack.</h2><p>Playlist de protagonista.</p>
   <div class="card"><h3>+ Add a song</h3><form onsubmit="addItem(event,'music')">
     <label>NOME DA MÚSICA</label><input id="musicTitle" required placeholder="Ex: Space Song">
     <label>ARTISTA</label><input id="musicArtist" placeholder="Nome do artista">
@@ -147,7 +147,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 </section>
 
 <section id="books" class="section">
-  <div class="eyebrow">LITERARY DATABASE / 004</div><h2>Currently reading.</h2><p>Livros que estamos lendo, queremos ler ou recomendamos um ao outro.</p>
+  <div class="eyebrow">DATABASE / 004</div><h2>Currently reading.</h2><p>Livros que estamos lendo, queremos ler ou recomendamos um ao outro.</p>
   <div class="card"><h3>+ Add a book</h3><form onsubmit="addItem(event,'books')">
     <label>TÍTULO</label><input id="booksTitle" required placeholder="Nome do livro">
     <label>AUTOR</label><input id="booksArtist" placeholder="Nome do autor">
@@ -196,7 +196,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 
 <button class="music-control" id="musicToggle" onclick="toggleMusic()">♫ PLAY STAR WARS THEME</button>
 <iframe id="musicFrame" title="Star Wars Main Theme audio" allow="autoplay; encrypted-media" src="about:blank"></iframe>
-<footer>STARBOUND ARCHIVES © 2026<br>MADE OF STARS, STORIES AND SHARED MEMORIES.<br>MAY THE FORCE BE WITH US.<br><br>LUCACETUDO (OWNED BY MARINA)</footer>
+<footer>LUCACETUDO © 2026<br>UNIVERSO STAR WARS.<br><br>LUCACETUDO (OWNED BY MARINA)</footer>
 
 <script>
 const KEY='starboundArchive_v1';
