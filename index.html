@@ -27,8 +27,8 @@ body{margin:0;background:var(--black);color:var(--yellow);font-family:'Space Mon
 @media(max-width:520px){.logo-outline{font-size:clamp(30px,8vw,42px);letter-spacing:-.08em;-webkit-text-stroke:1.4px #FFE81F}}
 .intro p{max-width:650px;font-family:'Orbitron';font-size:12px;line-height:2;letter-spacing:3px;color:var(--gold)}
 nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(5,6,8,.9);position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}
-nav button{background:transparent;border:1px solid transparent;color:var(--white);padding:12px 16px;cursor:pointer;font-family:'Orbitron';font-size:10px;letter-spacing:1px;transition:.3s}
-nav button:hover,nav button.active{color:var(--yellow);border:1px solid var(--yellow);box-shadow:0 0 12px rgba(255,232,31,.15)}
+nav button{background:var(--yellow);border:1px solid var(--yellow);border-radius:999px;color:#080808;padding:12px 16px;cursor:pointer;font-family:'Orbitron';font-size:10px;letter-spacing:1px;transition:.3s}
+nav button:hover,nav button.active{background:#fff;color:#080808;border-color:#fff;box-shadow:0 0 14px rgba(255,232,31,.32);transform:translateY(-1px)}
 main{max-width:1100px;margin:auto;padding:50px 25px}
 .section{display:none;animation:appear .4s ease}
 .section.active{display:block}
@@ -50,10 +50,10 @@ p{line-height:1.8}
 input,textarea,select{background:#080b12;color:var(--white);border:1px solid #5b522e;padding:13px;width:100%;font-family:'Space Mono';font-size:12px;outline:none;margin:7px 0 15px}
 input:focus,textarea:focus,select:focus{border-color:var(--yellow)}
 label{font-size:10px;letter-spacing:2px;color:var(--gold)}
-.btn{padding:13px 20px;background:var(--yellow);color:#080808;border:none;font-family:'Orbitron';font-size:10px;font-weight:bold;letter-spacing:1px;cursor:pointer;transition:.3s}
+.btn{padding:13px 20px;background:var(--yellow);color:#080808;border:none;border-radius:999px;font-family:'Orbitron';font-size:10px;font-weight:bold;letter-spacing:1px;cursor:pointer;transition:.3s}
 .btn:hover{background:white;transform:translateY(-2px)}
-.btn-outline{background:transparent;border:1px solid var(--yellow);color:var(--yellow)}
-.btn-danger{background:transparent;color:#ff7777;border:1px solid var(--red);padding:7px 10px;font-size:9px}
+.btn-outline{background:var(--yellow);border:1px solid var(--yellow);color:#080808}
+.btn-danger{background:transparent;color:#ff7777;border:1px solid var(--red);border-radius:999px;padding:7px 10px;font-size:9px}
 .item{background:linear-gradient(100deg,#17140b,#080808);border-left:3px solid var(--yellow);border-radius:3px 16px 16px 3px;padding:18px;margin-bottom:12px;position:relative}
 .item small{color:var(--muted);font-size:10px}
 .item-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:600;letter-spacing:.2px;color:var(--yellow);margin:8px 0;line-height:1.5}
@@ -186,12 +186,12 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 /* Cineminha: créditos em perspectiva */
 .cinema-screen{height:580px;max-height:72vh;overflow:hidden;position:relative;background:radial-gradient(ellipse at center,#111827 0,#030407 65%);border:1px solid #5c5018;border-radius:8px;perspective:420px;margin:20px 0}
 .cinema-stars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#ffe81f 1px,transparent 1px);background-size:71px 71px,113px 113px;background-position:0 0,29px 41px;opacity:.55}
-.cinema-crawl{position:absolute;left:9%;right:9%;top:100%;color:#FFE81F;text-align:justify;font-family:Orbitron,Arial,sans-serif;font-weight:700;font-size:clamp(15px,2vw,22px);line-height:1.75;transform-origin:50% 0;transform:rotateX(24deg);animation:cinemaRise 95s linear infinite;text-shadow:0 0 8px rgba(255,232,31,.22)}
+.cinema-crawl{position:absolute;left:9%;right:9%;top:100%;color:#FFE81F;text-align:justify;font-family:Orbitron,Arial,sans-serif;font-weight:700;font-size:clamp(15px,2vw,22px);line-height:1.75;transform-origin:50% 0;transform:rotateX(31deg);animation:cinemaRise 95s linear infinite;text-shadow:0 0 8px rgba(255,232,31,.22)}
 .cinema-crawl h2,.cinema-crawl h3{text-align:center;color:#FFE81F}.cinema-crawl h2{font-size:1.5em;letter-spacing:.16em}.cinema-crawl h3{font-size:1.3em;letter-spacing:.12em;margin:16px 0 35px}.cinema-crawl p{margin:0 0 25px}.cinema-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 @keyframes dollBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
-@keyframes cinemaRise{from{top:100%;transform:rotateX(24deg) translateZ(0)}to{top:-260%;transform:rotateX(24deg) translateZ(-250px)}}
-.movie-list{display:grid;gap:9px;margin-top:14px}.movie-item{padding:12px;border:1px solid #514719;background:#11100a;display:flex;justify-content:space-between;gap:10px;align-items:center}.tarot-board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.tarot-card{min-height:160px;border:1px solid #FFE81F;background:linear-gradient(145deg,#201a36,#090811);color:#FFE81F;border-radius:12px;padding:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;font-family:Orbitron,sans-serif}.tarot-card .tarot-symbol{font-size:42px;margin-bottom:10px}.tarot-card:disabled{cursor:default;opacity:1}.tarot-reading{padding:18px;border:1px solid #FFE81F;background:#100e0a;line-height:1.7;margin-top:15px}.tarot-reading p{margin:8px 0}.crown{color:#FFE81F;font-size:20px;text-shadow:0 0 10px #FFE81F}.ranking-line{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #333}
-@media(max-width:600px){.tarot-board{grid-template-columns:1fr}.cinema-screen{height:520px}}
+@keyframes cinemaRise{from{top:100%;transform:rotateX(31deg) translateZ(0)}to{top:-260%;transform:rotateX(31deg) translateZ(-250px)}}
+.movie-list{display:grid;gap:9px;margin-top:14px}.movie-item{padding:12px;border:1px solid #514719;background:#11100a;display:flex;justify-content:space-between;gap:10px;align-items:center}.tarot-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0}.tarot-card{min-height:330px;aspect-ratio:2/3;border:0;background:#d9d5c7;color:#171515;border-radius:5px;padding:9px;display:flex;flex-direction:column;justify-content:stretch;align-items:stretch;text-align:center;cursor:pointer;font-family:Georgia,serif;box-shadow:0 5px 18px #0009;position:relative;overflow:hidden}.tarot-card:before{content:'';position:absolute;inset:5px;border:2px solid #171515;pointer-events:none;z-index:2}.tarot-card .tarot-back{height:100%;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 8px;border:1px solid #171515;background:repeating-linear-gradient(45deg,#d7cdb2 0 5px,#c4b99e 5px 7px);font-family:Georgia,serif}.tarot-card .tarot-back .tarot-symbol{font-size:72px;color:#171515;text-shadow:2px 2px #f7e7b1}.tarot-card .tarot-roman{font-size:25px;font-weight:bold;letter-spacing:3px}.tarot-card .tarot-front{height:100%;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:13px 10px 9px;border:2px solid #171515;background:linear-gradient(180deg,#f1df85 0 25%,#d7d4c9 25% 78%,#f1df85 78%);position:relative}.tarot-card .tarot-front:after{content:'';position:absolute;inset:8px;border:1px solid #171515;pointer-events:none}.tarot-card .tarot-illustration{font-family:Georgia,serif;font-size:76px;line-height:1.2;filter:drop-shadow(3px 3px 0 #222);margin:auto 0;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:150px}.tarot-card .tarot-illustration svg{width:100%;max-width:178px;height:158px}.tarot-card .tarot-faction{font:700 9px Orbitron,sans-serif;letter-spacing:2px;z-index:1}.tarot-card .tarot-caption{font:700 18px Georgia,serif;text-transform:uppercase;letter-spacing:1px;z-index:1;border-top:2px solid #171515;padding-top:7px;width:100%}.tarot-card .tarot-joke{font:11px/1.35 Georgia,serif;margin-top:6px;z-index:1}.tarot-card:disabled{cursor:default;opacity:1}.tarot-card.revealed{cursor:default}.tarot-reading{padding:18px;border:1px solid #FFE81F;background:#100e0a;line-height:1.7;margin-top:15px}.tarot-reading p{margin:8px 0}.crown{color:#FFE81F;font-size:20px;text-shadow:0 0 10px #FFE81F}.ranking-line{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #333}
+@media(max-width:700px){.tarot-board{grid-template-columns:repeat(2,minmax(0,1fr))}.tarot-card{min-height:280px}.tarot-card .tarot-back,.tarot-card .tarot-front{min-height:260px}.tarot-card .tarot-illustration{font-size:58px}}@media(max-width:440px){.tarot-board{grid-template-columns:1fr}.tarot-card{max-width:260px;width:100%;margin:auto}}.cinema-screen{perspective:340px}
 
 
 .spotify-embed{margin-top:16px;width:100%}
@@ -208,6 +208,10 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 .spotify-connect-card button{position:relative;z-index:3;pointer-events:auto;cursor:pointer}
 .spotify-connect-card p{overflow-wrap:anywhere}
 html,body{max-width:100%;overflow-x:hidden}
+
+/* Mini fazendinha galáctica 2D */
+.farm-hud{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.farm-stat{border:1px solid #77671c;background:#11100a;border-radius:14px;padding:9px 14px;color:#FFE81F;font:11px Orbitron,sans-serif}.farm-world{border:2px solid #FFE81F;border-radius:18px;padding:18px;background:linear-gradient(#080d20 0 35%,#171c29 35% 44%,#40351f 44%);position:relative;overflow:hidden;min-height:290px}.farm-world:before{content:'✦   ·      ✧       ·    ✦        ·      ✧';position:absolute;top:15px;left:5%;right:5%;color:#fff4ad;letter-spacing:15px;opacity:.8}.farm-world.phase-2{background:linear-gradient(#071a16 0 35%,#14382a 35% 44%,#31502e 44%)}.farm-world.phase-3{background:linear-gradient(#b9d8e8 0 35%,#dcebf1 35% 44%,#879da8 44%)}.farm-ground{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;position:relative;margin-top:92px}.farm-plot{min-height:92px;border:2px solid #a77a36;border-radius:12px;background:linear-gradient(#5c351f,#2d1b17);color:#fff;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:11px Orbitron,sans-serif;box-shadow:inset 0 4px 0 #ffffff18;cursor:pointer}.farm-plot .crop{font-size:30px;line-height:1.1}.farm-plot.ready{border-color:#FFE81F;background:linear-gradient(#80612b,#3b2915);box-shadow:0 0 14px #ffe81f55}.farm-phase-note{position:relative;color:#fff;text-shadow:0 1px 3px #000;font:12px Orbitron,sans-serif}.farm-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.farm-progress{height:9px;border-radius:9px;background:#282828;overflow:hidden;margin:9px 0}.farm-progress span{display:block;height:100%;background:#FFE81F;width:0;transition:width .3s}
+
 </style>
 </head>
 <body>
@@ -242,6 +246,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <button onclick="showTab('game',this)">⚔ MISSÕES</button>
   <button onclick="showTab('cinema',this)">✦ CINEMINHA</button>
   <button onclick="showTab('tarot',this)">☾ TARÔ CÓSMICO</button>
+  <button onclick="showTab('farm',this)">✿ FAZENDINHA GALÁCTICA</button>
   <button id="logoutButton" type="button" onclick="logout()">SAIR</button>
 </nav>
 
@@ -404,6 +409,13 @@ html,body{max-width:100%;overflow-x:hidden}
  <div class="tarot-board" id="tarotBoard"><button class="tarot-card" onclick="drawTarot(0)"><span class="tarot-symbol">✦</span><strong>ESCOLHER CARTA I</strong><small>O que vem aí?</small></button><button class="tarot-card" onclick="drawTarot(1)"><span class="tarot-symbol">☾</span><strong>ESCOLHER CARTA II</strong><small>O que está oculto?</small></button><button class="tarot-card" onclick="drawTarot(2)"><span class="tarot-symbol">♜</span><strong>ESCOLHER CARTA III</strong><small>Qual o conselho?</small></button></div>
  <div class="tarot-reading" id="tarotReading">As cartas estão viradas para baixo. Escolha a primeira.</div><button class="btn btn-outline" onclick="resetTarot()">EMBARALHAR NOVAMENTE</button>
 </section>
+<section id="farm" class="section">
+ <div class="eyebrow">COLÔNIA AGRÍCOLA / SETOR 02</div><h2>Fazendinha galáctica</h2><p>Transformem um pedaço esquecido da galáxia numa fazenda interplanetária. Plantem, esperem a colheita e desbloqueiem novos mundos.</p>
+ <div class="farm-hud"><span class="farm-stat">FASE: <b id="farmPhase">1</b> / 3</span><span class="farm-stat">CRÉDITOS: <b id="farmCredits">0</b></span><span class="farm-stat">CICLO: <b id="farmTurn">1</b></span></div>
+ <div class="farm-world phase-1" id="farmWorld"><div class="farm-phase-note" id="farmPhaseName">FASE 1 — CAMPOS DE TATOOINE · Cultive brotos solares.</div><div class="farm-ground" id="farmGround"></div></div>
+ <div class="farm-progress"><span id="farmProgress"></span></div><p id="farmHint">Clique em um canteiro vazio para plantar. Avance o ciclo para crescer e colha quando estiver pronto.</p>
+ <div class="farm-actions"><button class="btn" onclick="advanceFarm()">AVANÇAR CICLO ↻</button><button class="btn btn-outline" onclick="restartFarm()">RECOMEÇAR FAZENDA</button></div>
+</section>
 
 </main>
 
@@ -427,8 +439,8 @@ const USER_EMAILS={
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let data;
 try { data=JSON.parse(localStorage.getItem(KEY)) || null; } catch { data=null; }
-if(!data) data={users:{1:'Darth Vader',2:'Batman'},profiles:{1:{photo:'',bio:''},2:{photo:'',bio:''}},activeUser:'1',startDate:'',music:[],books:[],comics:[],messages:[],comicCreations:[],movies:[],gameScores:{'1':0,'2':0}};
-data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};
+if(!data) data={users:{1:'Darth Vader',2:'Batman'},profiles:{1:{photo:'',bio:''},2:{photo:'',bio:''}},activeUser:'1',startDate:'',music:[],books:[],comics:[],messages:[],comicCreations:[],movies:[],gameScores:{'1':0,'2':0},farm:{phase:1,turn:1,credits:0,plots:Array(6).fill(null)}};
+data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};data.farm=data.farm||{phase:1,turn:1,credits:0,plots:Array(6).fill(null)};data.farm.plots=data.farm.plots||Array(6).fill(null);
 data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
 ['music','books','comics','messages','comicCreations','movies'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
 data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
@@ -460,7 +472,7 @@ async function loadCloudState(){
   if(error) throw error;
   if(row && row.state){
     data=row.state;
-    data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};
+    data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};data.farm=data.farm||{phase:1,turn:1,credits:0,plots:Array(6).fill(null)};data.farm.plots=data.farm.plots||Array(6).fill(null);
     data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
     ['music','books','comics','messages','comicCreations','movies'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
     data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
@@ -477,7 +489,7 @@ async function loadCloudState(){
     .on('postgres_changes',{event:'UPDATE',schema:'public',table:'universe_state',filter:'id=eq.main'},payload=>{
       if(payload.new?.state && currentAuthUser){
         const incoming=payload.new.state;
-        data=incoming; data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};
+        data=incoming; data.users=data.users||{1:'Darth Vader',2:'Batman'};data.gameScores=data.gameScores||{'1':0,'2':0};data.farm=data.farm||{phase:1,turn:1,credits:0,plots:Array(6).fill(null)};data.farm.plots=data.farm.plots||Array(6).fill(null);
         data.profiles=data.profiles||{1:{photo:'',bio:''},2:{photo:'',bio:''}};
         ['music','books','comics','messages','comicCreations','movies'].forEach(k=>{if(!Array.isArray(data[k]))data[k]=[];});
     data.comics.forEach(c=>{if(!c.collection)c.collection='edicao';});
@@ -617,7 +629,7 @@ function render(){
   document.getElementById('user1Display').textContent=data.users[1];
   document.getElementById('user2Display').textContent=data.users[2];
   if(currentAuthUser) document.getElementById('currentUser').textContent='CONECTADO COMO '+(data.activeUser==='1'?'Darth Vader':'Batman')+' · alterações sincronizadas online.';
-  renderDays();renderProfiles();['music','books','comics'].forEach(renderList);renderContributions();renderMessages();renderStrips();renderMovies();updateGameUI();
+  renderDays();renderProfiles();['music','books','comics'].forEach(renderList);renderContributions();renderMessages();renderStrips();renderMovies();updateGameUI();renderFarm();
 }
 
 
@@ -659,9 +671,38 @@ function addMovie(event){event.preventDefault();const field=document.getElementB
 function renderMovies(){const box=document.getElementById('movieList');if(!box)return;box.innerHTML=(data.movies||[]).map(m=>`<div class="movie-item"><span>${escapeHTML(m.title)} <small>· @${escapeHTML(data.users[m.user]||'Tripulante')}</small></span>${String(m.user)===String(data.activeUser)?`<button class="btn btn-danger" onclick="removeMovie('${m.id}')">REMOVER</button>`:''}</div>`).join('')||'<div class="empty">A lista ainda está vazia. Adicionem o primeiro filme.</div>';}
 function removeMovie(id){data.movies=(data.movies||[]).filter(m=>!(m.id===id&&String(m.user)===String(data.activeUser)));save();renderMovies();}
 function drawMovie(){const out=document.getElementById('movieDraw');if(!data.movies||!data.movies.length){out.textContent='Não há filmes na lista. Adicionem alguns antes do sorteio!';return;}const pick=data.movies[Math.floor(Math.random()*data.movies.length)];out.innerHTML='🎬 FILME DA VEZ: <strong>'+escapeHTML(pick.title)+'</strong><br>O destino escolheu. Sem reclamações com o Conselho Jedi.';}
-const tarotDeck=[['O Jedi Atrasado','Você vai encontrar equilíbrio espiritual… depois de apertar soneca mais três vezes.'],['A Estrela da Morte','Uma grande mudança se aproxima. Provavelmente é só uma atualização obrigatória.'],['O Café Cósmico','Uma energia intensa entra na sua vida: cafeína. Beba água também.'],['O Gato de Schrödinger','Uma oportunidade pode ou não aparecer. Você só vai saber se abrir a mensagem.'],['A Torre do Wi-Fi','Algo pode cair inesperadamente. Faça backup e não culpe a Força.'],['A Imperatriz dos Boletos','Abundância material no horizonte, mas o cartão pede cautela.'],['O Eremita Online','Você precisa de um tempo sozinho… mas vai continuar olhando o celular.'],['O Carro Espacial','Avanço rápido! Só confira se não esqueceu o freio de mão.'],['A Lua de Algoritmo','Nem tudo é o que parece. Principalmente recomendações do YouTube às três da manhã.'],['O Sol de Tatooine','Um dia brilhante vem aí. Protetor solar, por favor.'],['O Enforcado no Loading','A resposta virá. A barra está em 99% há meia hora.'],['A Força do Ctrl+Z','Você tem poder para recomeçar. Use-o antes de mandar aquela mensagem.']];let tarotPicks=[];
-function drawTarot(slot){if(tarotPicks[slot])return;let available=tarotDeck.filter(c=>!tarotPicks.some(p=>p[0]===c[0]));const card=available[Math.floor(Math.random()*available.length)];tarotPicks[slot]=card;const buttons=document.querySelectorAll('#tarotBoard .tarot-card');const b=buttons[slot];b.disabled=true;b.innerHTML=`<span class="tarot-symbol">✧</span><strong>${card[0]}</strong><small>${card[1]}</small>`;const count=tarotPicks.filter(Boolean).length;document.getElementById('tarotReading').innerHTML=`<strong>${count}/3 CARTAS REVELADAS</strong><p>${escapeHTML(card[0])}: ${escapeHTML(card[1])}</p>`;if(count===3){const lines=tarotPicks.map((c,i)=>`<p><strong>${['PASSADO','PRESENTE','FUTURO'][i]} — ${escapeHTML(c[0])}:</strong> ${escapeHTML(c[1])}</p>`).join('');document.getElementById('tarotReading').innerHTML='<h3>SUA PREVISÃO INTERGALÁCTICA</h3>'+lines+'<p><strong>Veredito:</strong> a galáxia recomenda bom humor, um lanche e não tomar decisões importantes com fome.</p>';}}
-function resetTarot(){tarotPicks=[];document.querySelectorAll('#tarotBoard .tarot-card').forEach((b,i)=>{b.disabled=false;b.innerHTML=`<span class="tarot-symbol">${['✦','☾','♜'][i]}</span><strong>ESCOLHER CARTA ${['I','II','III'][i]}</strong><small>${['O que vem aí?','O que está oculto?','Qual o conselho?'][i]}</small>`;});document.getElementById('tarotReading').textContent='As cartas estão viradas para baixo. Escolha a primeira.';}
+const tarotDeck=[
+ {roman:'XX',name:'O JULGAMENTO',art:'♟',faction:'LADO SOMBRIO',joke:'Uma decisão importante se aproxima. Darth Vader já decidiu por você; só falta avisar o departamento de RH.'},
+ {roman:'XI',name:'A JUSTIÇA',art:'⚖',faction:'GOTHAM CITY',joke:'O equilíbrio será restaurado. Batman recomenda investigar primeiro e dormir depois.'},
+ {roman:'XVI',name:'A TORRE DA ESTRELA',art:'☄',faction:'IMPÉRIO GALÁCTICO',joke:'Uma estrutura pode desabar. Talvez seja sua rotina de sono, talvez seja a Estrela da Morte. Faça backup.'},
+ {roman:'XVII',name:'A ESTRELA',art:'✦',faction:'FORÇA LUMINOSA',joke:'A esperança renasce. Ou você finalmente encontrou o carregador que estava na sua mão.'},
+ {roman:'XV',name:'O IMPERADOR',art:'♛',faction:'TRONO SITH',joke:'Alguém vai querer controlar tudo. Respire fundo e não transforme a reunião numa ordem 66.'},
+ {roman:'IX',name:'O EREMITA',art:'🦇',faction:'GOTHAM CITY',joke:'Um período de introspecção vem aí. Bruce Wayne chama isso de terça-feira.'},
+ {roman:'VII',name:'A CARRUAGEM',art:'🚀',faction:'ORLA EXTERIOR',joke:'Você vai avançar com velocidade. Confira os retrovisores e evite fazer a Kessel Run com sono.'},
+ {roman:'XVIII',name:'A LUA DE GOTHAM',art:'☾',faction:'CIDADE SOMBRIA',joke:'Nem tudo é o que parece. Desconfie de pistas óbvias, mensagens às 3h e do Coringa oferecendo consultoria.'},
+ {roman:'I',name:'O MAGO',art:'⚡',faction:'ACADEMIA JEDI',joke:'Você tem todas as ferramentas. Só não use a Força para justificar mais uma compra por impulso.'},
+ {roman:'XIII',name:'A MORTE DA SEGUNDA',art:'☠',faction:'GOTHAM / OUTER RIM',joke:'Um ciclo termina. Pode ser uma fase da vida ou simplesmente a bateria do controle.'},
+ {roman:'XIX',name:'O SOL DE TATOOINE',art:'☀',faction:'SISTEMA TATOO',joke:'Boas notícias no horizonte. Leve água, protetor solar e não aposte corrida com podracers.'},
+ {roman:'VIII',name:'A FORÇA',art:'✊',faction:'ORDEM JEDI',joke:'Sua paciência será testada. Conte até dez; se não funcionar, conte até dez em binário.'}
+];let tarotPicks=[];
+function tarotArt(card){
+ if(card.name==='O JULGAMENTO')return `<svg viewBox="0 0 180 160" role="img" aria-label="Figura inspirada em Darth Vader"><path d="M28 153 Q42 100 68 92 L70 58 L110 58 L112 92 Q143 106 153 153Z" fill="#19191b" stroke="#111" stroke-width="4"/><path d="M64 55 Q58 28 90 17 Q122 28 116 55 L106 70 L74 70Z" fill="#111" stroke="#050505" stroke-width="4"/><path d="M70 43 L84 35 L96 35 L110 43 L105 56 L75 56Z" fill="#687078"/><path d="M83 59 L97 59 L102 79 L78 79Z" fill="#343a40"/><path d="M82 84 L98 84 L104 112 L76 112Z" fill="#343a40"/><path d="M80 91 L100 91 M80 99 L100 99" stroke="#d8bd55" stroke-width="4"/><path d="M17 18 L163 18 M90 4 L90 24" stroke="#171515" stroke-width="2"/><circle cx="90" cy="10" r="5" fill="#b62d25"/></svg>`;
+ if(card.name==='A JUSTIÇA')return `<svg viewBox="0 0 180 160" role="img" aria-label="Figura de Batman com balança"><path d="M52 150 Q58 108 74 91 L68 53 L78 22 L90 37 L102 22 L112 53 L106 91 Q128 108 132 150Z" fill="#24252a" stroke="#101114" stroke-width="4"/><path d="M70 55 Q70 29 90 25 Q110 29 110 55 L103 71 L77 71Z" fill="#34363b"/><path d="M74 48 L82 37 L89 47 L98 37 L106 48 L101 61 L79 61Z" fill="#e5d9b7"/><path d="M22 42 L22 119 M158 42 L158 119 M22 52 L158 52" stroke="#b78d25" stroke-width="3"/><path d="M22 119 L8 137 Q22 147 36 137Z M158 119 L144 137 Q158 147 172 137Z" fill="#d7b64d" stroke="#171515" stroke-width="2"/><path d="M90 2 L90 22" stroke="#171515" stroke-width="3"/></svg>`;
+ return card.art;
+}
+function tarotCardFace(card){return `<span class="tarot-front"><span class="tarot-roman">${card.roman}</span><span class="tarot-faction">${card.faction}</span><span class="tarot-illustration">${tarotArt(card)}</span><span class="tarot-caption">${card.name}</span><span class="tarot-joke">${card.joke}</span></span>`;}
+function tarotBack(i){return `<span class="tarot-back"><span class="tarot-roman">${['I','II','III'][i]}</span><span class="tarot-symbol">✦</span><strong>ARQUIVO DO DESTINO</strong><small>STAR WARS × GOTHAM</small></span>`;}
+function drawTarot(slot){if(tarotPicks[slot])return;let available=tarotDeck.filter(c=>!tarotPicks.some(p=>p.name===c.name));const card=available[Math.floor(Math.random()*available.length)];tarotPicks[slot]=card;const buttons=document.querySelectorAll('#tarotBoard .tarot-card');const b=buttons[slot];b.disabled=true;b.classList.add('revealed');b.innerHTML=tarotCardFace(card);const count=tarotPicks.filter(Boolean).length;document.getElementById('tarotReading').innerHTML=`<strong>${count}/3 CARTAS REVELADAS</strong><p>${escapeHTML(card.name)}: ${escapeHTML(card.joke)}</p>`;if(count===3){const lines=tarotPicks.map((c,i)=>`<p><strong>${['PASSADO','PRESENTE','FUTURO'][i]} — ${escapeHTML(c.name)}:</strong> ${escapeHTML(c.joke)}</p>`).join('');document.getElementById('tarotReading').innerHTML='<h3>SUA PREVISÃO INTERGALÁCTICA</h3>'+lines+'<p><strong>Veredito:</strong> a galáxia recomenda bom humor, um lanche e não tomar decisões importantes com fome.</p>';}}
+function resetTarot(){tarotPicks=[];document.querySelectorAll('#tarotBoard .tarot-card').forEach((b,i)=>{b.disabled=false;b.classList.remove('revealed');b.innerHTML=tarotBack(i);});document.getElementById('tarotReading').textContent='As cartas estão viradas para baixo. Escolha a primeira.';}
+
+
+// Fazendinha galáctica: progresso compartilhado no mesmo registro Supabase.
+const farmPhases=[{name:'CAMPOS DE TATOOINE',crop:'🌱',soil:'phase-1',unlock:0,desc:'Cultive brotos solares nas dunas.'},{name:'BOSQUE DE ENDOR',crop:'🌿',soil:'phase-2',unlock:9,desc:'As sementes da floresta crescem sob as luas.'},{name:'PLANÍCIE DE HOTH',crop:'❄️',soil:'phase-3',unlock:21,desc:'Cultive cristais de gelo antes da próxima nevasca.'}];
+function ensureFarm(){if(!data.farm)data.farm={phase:1,turn:1,credits:0,plots:Array(6).fill(null)};if(!Array.isArray(data.farm.plots))data.farm.plots=Array(6).fill(null);while(data.farm.plots.length<6)data.farm.plots.push(null);}
+function renderFarm(){const ground=document.getElementById('farmGround');if(!ground)return;ensureFarm();const f=data.farm,phase=farmPhases[f.phase-1];document.getElementById('farmPhase').textContent=f.phase;document.getElementById('farmCredits').textContent=f.credits;document.getElementById('farmTurn').textContent=f.turn;document.getElementById('farmPhaseName').textContent=`FASE ${f.phase} — ${phase.name} · ${phase.desc}`;const world=document.getElementById('farmWorld');world.className='farm-world '+phase.soil;ground.innerHTML=f.plots.map((plot,i)=>{const ready=plot&&plot.growth>=2;const icon=!plot?'＋':ready?phase.crop==='❄️'?'💎':'🌾':phase.crop;const label=!plot?'PLANTAR':ready?'COLHER':'CRESCENDO';return `<button class="farm-plot ${ready?'ready':''}" onclick="farmPlot(${i})"><span class="crop">${icon}</span><strong>CANTEIRO ${i+1}</strong><small>${label}</small></button>`;}).join('');const next=farmPhases[f.phase];const progress=next?Math.min(100,Math.round(f.credits/next.unlock*100)):100;document.getElementById('farmProgress').style.width=progress+'%';document.getElementById('farmHint').textContent=next?`Próximo mundo: ${next.name}. Precisa de ${next.unlock} créditos para desbloquear.`:'Todas as fases desbloqueadas! Sua colônia já é uma potência agrícola intergaláctica.';}
+function farmPlot(index){ensureFarm();const f=data.farm,plot=f.plots[index],phase=farmPhases[f.phase-1];if(!plot){f.plots[index]={growth:0,plantedAt:f.turn};document.getElementById('farmHint').textContent='Semente plantada! Avance o ciclo para ela crescer.';}else if(plot.growth>=2){f.plots[index]=null;f.credits+=3;document.getElementById('farmHint').textContent='Colheita recolhida: +3 créditos galácticos.';}else{document.getElementById('farmHint').textContent='Ainda está crescendo. Avance mais um ciclo.';return;}save();renderFarm();}
+function advanceFarm(){ensureFarm();const f=data.farm;f.turn++;f.plots.forEach(p=>{if(p)p.growth=Math.min(2,(p.growth||0)+1);});const next=farmPhases[f.phase];if(next&&f.credits>=next.unlock){f.phase++;f.plots=Array(6).fill(null);document.getElementById('farmHint').textContent=`Novo planeta desbloqueado: ${farmPhases[f.phase-1].name}!`; }else{document.getElementById('farmHint').textContent='Um novo ciclo começou. Veja quais plantações estão prontas para colher.';}save();renderFarm();}
+function restartFarm(){if(!confirm('Recomeçar a fazenda? O progresso atual será perdido para os dois jogadores.'))return;data.farm={phase:1,turn:1,credits:0,plots:Array(6).fill(null)};save();renderFarm();}
 
 let musicPlaying=false;
 function toggleMusic(){
@@ -693,6 +734,8 @@ function endGame(){gameRunning=false;cancelAnimationFrame(gameFrame);const score
 function switchGamePlayer(){if(gameRunning){alert('Termine a missão antes de trocar de piloto.');return;}gameCurrentPlayer=gameCurrentPlayer==='1'?'2':'1';gameDistance=0;updateGameUI();document.getElementById('gameMessage').textContent='Agora é a vez de '+data.users[gameCurrentPlayer]+'.';drawShipGame();}
 
 updateGameUI();
+resetTarot();
+renderFarm();
 initShipGame();
 initAuth();
 
