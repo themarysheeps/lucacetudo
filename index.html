@@ -268,7 +268,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
     <h3>♫ CONECTAR AO SPOTIFY</h3>
     <p>Conecte sua conta para identificar seu perfil e abrir suas playlists. A reprodução de músicas completas continua sendo feita pelo Spotify.</p>
     <label for="spotifyClientId">SPOTIFY CLIENT ID</label>
-    <input id="spotifyClientId" placeholder="Cole aqui o Client ID do Spotify">
+    <input id="spotifyClientId" value="6c36efa7768c49f391d14caaf40fb6a0" readonly aria-label="Spotify Client ID">
     <div class="spotify-actions">
       <button class="btn" type="button" onclick="connectSpotify()">CONECTAR CONTA</button>
       <button class="btn secondary" type="button" onclick="disconnectSpotify()">DESCONECTAR</button>
@@ -706,13 +706,15 @@ initAuth();
 const SPOTIFY_TOKEN_KEY='lucacetudo_spotify_token_v1';
 const SPOTIFY_VERIFIER_KEY='lucacetudo_spotify_verifier_v1';
 const SPOTIFY_CLIENT_KEY='lucacetudo_spotify_client_id_v1';
+const SPOTIFY_CLIENT_ID='6c36efa7768c49f391d14caaf40fb6a0';
 function spotifyRedirectUri(){return window.location.origin+window.location.pathname;}
 function spotifyBase64Url(bytes){let str='';bytes.forEach(b=>str+=String.fromCharCode(b));return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
 async function spotifySha256(value){return await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));}
 function spotifyStatus(message){const el=document.getElementById('spotifyStatus');if(el)el.textContent=message;}
 function initSpotifyPanel(){
  const client=document.getElementById('spotifyClientId'),redirect=document.getElementById('spotifyRedirectUri');
- if(client)client.value=localStorage.getItem(SPOTIFY_CLIENT_KEY)||'';
+ if(client)client.value=SPOTIFY_CLIENT_ID;
+ localStorage.setItem(SPOTIFY_CLIENT_KEY,SPOTIFY_CLIENT_ID);
  if(redirect)redirect.textContent=spotifyRedirectUri();
  const token=JSON.parse(localStorage.getItem(SPOTIFY_TOKEN_KEY)||'null');
  if(token?.access_token && token.expires_at>Date.now()) spotifyLoadProfile(token.access_token);
@@ -725,8 +727,7 @@ function initSpotifyPanel(){
  }
 }
 async function connectSpotify(){
- const clientId=document.getElementById('spotifyClientId')?.value.trim();
- if(!clientId){spotifyStatus('Informe primeiro o Client ID criado no Spotify Developer Dashboard.');return;}
+ const clientId=SPOTIFY_CLIENT_ID;
  localStorage.setItem(SPOTIFY_CLIENT_KEY,clientId);
  const verifier=spotifyBase64Url(crypto.getRandomValues(new Uint8Array(64)));
  localStorage.setItem(SPOTIFY_VERIFIER_KEY,verifier);
