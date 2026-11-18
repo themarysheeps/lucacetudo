@@ -194,11 +194,6 @@ footer{border-top:1px solid var(--border);text-align:center;padding:35px 15px;co
 @media(max-width:600px){.tarot-board{grid-template-columns:1fr}.cinema-screen{height:520px}}
 
 
-.spotify-connect-card{border:1px solid #1ed760!important;box-shadow:0 0 18px rgba(30,215,96,.08)}
-.spotify-connect-card h3{color:#1ed760}
-.spotify-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-.spotify-connect-card .btn{margin-top:8px}
-.spotify-connect-card .btn.secondary{background:transparent;color:#FFE81F;border:1px solid #FFE81F}
 .spotify-embed{margin-top:16px;width:100%}
 .spotify-embed iframe{width:100%;min-height:152px;border:0;border-radius:12px}
 .spotify-uri{display:block;overflow-wrap:anywhere;padding:10px;background:#111;color:#FFE81F;font-size:12px}
@@ -274,22 +269,12 @@ html,body{max-width:100%;overflow-x:hidden}
 <section id="music" class="section">
   <div class="eyebrow">TRILHA SONORA / 003</div><h2>Nossa trilha sonora.</h2><p>As músicas que acompanham nossos dias, lembranças e momentos.</p>
   <div class="card spotify-connect-card">
-    <h3>♫ CONECTAR AO SPOTIFY</h3>
-    <p>Conecte sua conta para identificar seu perfil e abrir suas playlists. A reprodução de músicas completas continua sendo feita pelo Spotify.</p>
-    <label for="spotifyClientId">SPOTIFY CLIENT ID</label>
-    <input id="spotifyClientId" value="6c36efa7768c49f391d14caaf40fb6a0" readonly aria-label="Spotify Client ID">
-    <div class="spotify-actions">
-      <button class="btn" type="button" onclick="connectSpotify()">CONECTAR CONTA</button>
-      <button class="btn secondary" type="button" onclick="disconnectSpotify()">DESCONECTAR</button>
+    <h3>♫ NOSSA PLAYLIST</h3>
+    <p>A trilha sonora oficial do nosso universo. Dê o play e deixe a galáxia tocar.</p>
+    <div class="spotify-embed">
+      <iframe title="Playlist do Lucacetudo no Spotify" src="https://open.spotify.com/embed/playlist/37i9dQZF1EJN5AkfMk549R?utm_source=generator" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
-    <p class="small" id="spotifyStatus">Conta não conectada.</p>
-    <label for="spotifyEmbedUrl">LINK DE PLAYLIST / ÁLBUM / MÚSICA</label>
-    <input id="spotifyEmbedUrl" placeholder="https://open.spotify.com/playlist/...">
-    <button class="btn" type="button" onclick="embedSpotify()">ABRIR NO CINEMINHA SONORO</button>
-    <div id="spotifyEmbed" class="spotify-embed"></div>
-    <p class="small">URL de redirecionamento para cadastrar no Spotify Developer Dashboard:</p>
-    <code id="spotifyRedirectUri" class="spotify-uri"></code>
-    <button class="btn secondary" type="button" onclick="copySpotifyRedirect()">COPIAR URL DE REDIRECIONAMENTO</button>
+    <a class="btn" href="https://open.spotify.com/playlist/37i9dQZF1EJN5AkfMk549R" target="_blank" rel="noopener noreferrer">ABRIR NO SPOTIFY</a>
   </div>
   <div class="card"><h3>+ Adicionar música</h3><form onsubmit="addItem(event,'music')">
     <label>NOME DA MÚSICA</label><input id="musicTitle" required placeholder="Ex: Space Song">
@@ -711,81 +696,7 @@ updateGameUI();
 initShipGame();
 initAuth();
 
-// Spotify Connect: OAuth Authorization Code com PKCE (sem client secret no navegador).
-const SPOTIFY_TOKEN_KEY='lucacetudo_spotify_token_v1';
-const SPOTIFY_VERIFIER_KEY='lucacetudo_spotify_verifier_v1';
-const SPOTIFY_CLIENT_KEY='lucacetudo_spotify_client_id_v1';
-const SPOTIFY_CLIENT_ID='6c36efa7768c49f391d14caaf40fb6a0';
-function spotifyRedirectUri(){return window.location.origin+window.location.pathname;}
-function spotifyBase64Url(bytes){let str='';bytes.forEach(b=>str+=String.fromCharCode(b));return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
-async function spotifySha256(value){return await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));}
-function spotifyStatus(message){const el=document.getElementById('spotifyStatus');if(el)el.textContent=message;}
-function initSpotifyPanel(){
- const client=document.getElementById('spotifyClientId'),redirect=document.getElementById('spotifyRedirectUri');
- if(client)client.value=SPOTIFY_CLIENT_ID;
- localStorage.setItem(SPOTIFY_CLIENT_KEY,SPOTIFY_CLIENT_ID);
- if(redirect)redirect.textContent=spotifyRedirectUri();
- const token=JSON.parse(localStorage.getItem(SPOTIFY_TOKEN_KEY)||'null');
- if(token?.access_token && token.expires_at>Date.now()) spotifyLoadProfile(token.access_token);
- else if(token?.refresh_token) spotifyRefreshToken(token.refresh_token).then(t=>t&&spotifyLoadProfile(t.access_token));
- const params=new URLSearchParams(location.search),code=params.get('code'),state=params.get('state'),expected=localStorage.getItem('lucacetudo_spotify_oauth_state');
- if(code){
-  history.replaceState({},document.title,location.pathname);
-  if(!state||state!==expected){spotifyStatus('Não foi possível validar o retorno do Spotify. Tente conectar novamente.');return;}
-  spotifyExchangeCode(code);
- }
-}
-async function connectSpotify(){
- const clientId=SPOTIFY_CLIENT_ID;
- localStorage.setItem(SPOTIFY_CLIENT_KEY,clientId);
- const verifier=spotifyBase64Url(crypto.getRandomValues(new Uint8Array(64)));
- localStorage.setItem(SPOTIFY_VERIFIER_KEY,verifier);
- const state=spotifyBase64Url(crypto.getRandomValues(new Uint8Array(16)));
- localStorage.setItem('lucacetudo_spotify_oauth_state',state);
- const challenge=spotifyBase64Url(new Uint8Array(await spotifySha256(verifier)));
- const params=new URLSearchParams({client_id:clientId,response_type:'code',redirect_uri:spotifyRedirectUri(),code_challenge_method:'S256',code_challenge:challenge,state,scope:'user-read-private user-read-email playlist-read-private playlist-read-collaborative user-library-read'});
- location.href='https://accounts.spotify.com/authorize?'+params.toString();
-}
-async function spotifyExchangeCode(code){
- const clientId=localStorage.getItem(SPOTIFY_CLIENT_KEY),verifier=localStorage.getItem(SPOTIFY_VERIFIER_KEY);
- if(!clientId||!verifier){spotifyStatus('Configuração incompleta. Informe o Client ID e conecte novamente.');return;}
- try{
-  const body=new URLSearchParams({client_id:clientId,grant_type:'authorization_code',code,redirect_uri:spotifyRedirectUri(),code_verifier:verifier});
-  const res=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
-  const result=await res.json();if(!res.ok)throw new Error(result.error_description||result.error||'Falha ao conectar');
-  result.expires_at=Date.now()+(result.expires_in*1000)-60000;localStorage.setItem(SPOTIFY_TOKEN_KEY,JSON.stringify(result));localStorage.removeItem(SPOTIFY_VERIFIER_KEY);
-  spotifyLoadProfile(result.access_token);
- }catch(err){spotifyStatus('Erro ao conectar: '+err.message);}
-}
-async function spotifyRefreshToken(refreshToken){
- try{
-  const body=new URLSearchParams({client_id:localStorage.getItem(SPOTIFY_CLIENT_KEY)||'',grant_type:'refresh_token',refresh_token:refreshToken});
-  const res=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
-  const result=await res.json();if(!res.ok)throw new Error(result.error_description||'Falha ao renovar sessão');
-  const old=JSON.parse(localStorage.getItem(SPOTIFY_TOKEN_KEY)||'{}'),next={...old,...result,refresh_token:result.refresh_token||refreshToken,expires_at:Date.now()+(result.expires_in*1000)-60000};
-  localStorage.setItem(SPOTIFY_TOKEN_KEY,JSON.stringify(next));return next;
- }catch(err){spotifyStatus('Sessão Spotify expirada. Conecte novamente.');return null;}
-}
-async function spotifyLoadProfile(accessToken){
- try{
-  const res=await fetch('https://api.spotify.com/v1/me',{headers:{Authorization:'Bearer '+accessToken}});
-  if(res.status===401){const old=JSON.parse(localStorage.getItem(SPOTIFY_TOKEN_KEY)||'{}');const fresh=old.refresh_token?await spotifyRefreshToken(old.refresh_token):null;if(fresh)return spotifyLoadProfile(fresh.access_token);}
-  const profile=await res.json();if(!res.ok)throw new Error(profile.error?.message||'Não foi possível carregar o perfil');
-  spotifyStatus('Conectado como '+(profile.display_name||profile.id)+'.');
- }catch(err){spotifyStatus('Spotify: '+err.message);}
-}
-function disconnectSpotify(){localStorage.removeItem(SPOTIFY_TOKEN_KEY);localStorage.removeItem(SPOTIFY_VERIFIER_KEY);spotifyStatus('Conta Spotify desconectada deste navegador.');}
-function embedSpotify(){
- const raw=document.getElementById('spotifyEmbedUrl')?.value.trim();if(!raw)return;
- try{
-  const url=new URL(raw);if(!['open.spotify.com','www.open.spotify.com'].includes(url.hostname))throw new Error('Use um link oficial open.spotify.com');
-  const parts=url.pathname.split('/').filter(Boolean);if(parts.length<2)throw new Error('Cole o link de uma música, álbum ou playlist.');
-  const type=parts[0],id=parts[1];if(!['track','album','playlist','episode','show'].includes(type))throw new Error('Tipo de link não compatível.');
-  document.getElementById('spotifyEmbed').innerHTML='<iframe src="https://open.spotify.com/embed/'+type+'/'+encodeURIComponent(id)+'?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>';
- }catch(err){spotifyStatus(err.message);}
-}
-function copySpotifyRedirect(){const value=spotifyRedirectUri();if(navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(()=>spotifyStatus('URL de redirecionamento copiada.'));else spotifyStatus(value);}
-document.addEventListener('DOMContentLoaded',initSpotifyPanel);
+// Playlist fixa do Lucacetudo: reprodução incorporada, sem login Spotify no site.
 </script>
 </body>
 </html>
